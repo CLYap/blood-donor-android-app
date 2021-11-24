@@ -2,8 +2,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './../screens/login';
-import Appointment from './../screens/appointment';
+import Home from './../screens/home';
 import { Colors } from './../components/styles';
+import DrawerStack from './drawer-stack';
 
 const { tertiary, brand } = Colors;
 
@@ -29,9 +30,9 @@ const RootStack = () => {
       >
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen
-          options={{ headerTintColor: brand }}
-          name='Appointment'
-          component={Appointment}
+          options={{ headerTintColor: brand, headerShown: false }}
+          name='DrawerStack'
+          component={DrawerStack}
         />
       </Stack.Navigator>
     </NavigationContainer>

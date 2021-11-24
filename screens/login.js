@@ -46,7 +46,7 @@ const Login = function ({ navigation }) {
           initialValues={{ icNo: '', password: '' }}
           onSubmit={(values) => {
             console.log(values);
-            navigation.navigate('Appointment');
+            navigation.navigate('DrawerStack');
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (

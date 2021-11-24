@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const SignOut = () => {
+const Logout = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>SignOut</Text>
+      <Text>Logout</Text>
     </View>
   );
 };
 
-export default SignOut;
+export default Logout;
