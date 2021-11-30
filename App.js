@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import RootStack from './navigators/root-stack';
+import DrawerStackScreen from './navigators/drawer-stack';
+import Login from './screens/login';
 
 export default function App() {
-  return <RootStack />;
+  const isLoggedIn = true;
+  return isLoggedIn ? <DrawerStackScreen /> : <Login />;
 }

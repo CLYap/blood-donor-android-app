@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Platform } from 'react-native';
+import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 // icons
 import { MaterialIcons, Ionicons, Fontisto } from '@expo/vector-icons';
@@ -19,83 +20,105 @@ import {
   StyledButton,
   ButtonText,
   Colors,
-  MsgBox,
-  Line,
-  ExtraView,
-  ExtraText,
   TextLink,
   TextLinkContent,
+  StyledIcon,
+  ErrorMsgContainer,
+  ErrorMsg,
 } from './../components/styles';
+
+// keyboard avoiding view
+import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
 // colors
 const { brand, darkLight, primary } = Colors;
 
+const userCredential = { icNo: '', password: '' };
+
+const validationSchema = Yup.object({
+  icNo: Yup.number()
+    .integer()
+    .typeError('Enter numeric characters only')
+    .required('IC no. is required!'),
+  password: Yup.string().trim().required('Password is required!'),
+});
+
 const Login = function ({ navigation }) {
   const [hidePassword, setHidePassword] = useState(true);
   return (
-    <StyledContainer>
-      <StatusBar style='dark' />
-      <InnerContainer>
-        <PageLogo
-          resizeMode='cover'
-          source={require('../assets/blood-drop.png')}
-        />
-        <PageTitle>Blood Donor App</PageTitle>
-        <SubTitle>Account Login</SubTitle>
-        <Formik
-          initialValues={{ icNo: '', password: '' }}
-          onSubmit={(values) => {
-            console.log(values);
-            navigation.navigate('DrawerStack');
-          }}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <StyledFormArea>
-              <MyTextInput
-                label='IC no.'
-                icon='perm-identity'
-                placeholder='99XXXXXXXXXX'
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('icNo')}
-                onBlur={handleBlur('icNo')}
-                value={values.icNo}
-                keyboardType='number-pad'
-              />
-              <MyTextInput
-                label='Password'
-                icon='lock'
-                placeholder='* * * * * * * * *'
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                value={values.password}
-                secureTextEntry={hidePassword}
-                isPassword
-                hidePassword={hidePassword}
-                setHidePassword={setHidePassword}
-              />
-              <StyledButton onPress={handleSubmit}>
-                <ButtonText>Login</ButtonText>
-              </StyledButton>
-              <ExtraView>
+    <KeyboardAvoidingWrapper>
+      <StyledContainer>
+        <StatusBar style='dark' />
+        <InnerContainer>
+          <PageLogo resizeMode='cover' source={require('../assets/logo.png')} />
+          <PageTitle>Blood Donor App</PageTitle>
+          <SubTitle>Account Login</SubTitle>
+          <Formik
+            initialValues={userCredential}
+            validationSchema={validationSchema}
+            onSubmit={(values) => {
+              setTimeout(() => {
+                console.log(values);
+              }, 3000);
+              navigation.navigate('DrawerStackScreen');
+            }}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <StyledFormArea>
+                <TextInput
+                  label='IC no.'
+                  error={touched.icNo && errors.icNo}
+                  icon='perm-identity'
+                  placeholder='99XXXXXXXXXX'
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('icNo')}
+                  onBlur={handleBlur('icNo')}
+                  value={values.icNo}
+                  keyboardType='number-pad'
+                />
+                <TextInput
+                  label='Password'
+                  error={touched.password && errors.password}
+                  icon='lock'
+                  placeholder='* * * * * * * * *'
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  secureTextEntry={hidePassword}
+                  isPassword
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                />
+                <StyledButton onPress={handleSubmit}>
+                  <ButtonText>Login</ButtonText>
+                </StyledButton>
                 <TextLink>
                   <TextLinkContent>Forgot password? </TextLinkContent>
                 </TextLink>
-              </ExtraView>
-            </StyledFormArea>
-          )}
-        </Formik>
-      </InnerContainer>
-    </StyledContainer>
+              </StyledFormArea>
+            )}
+          </Formik>
+        </InnerContainer>
+      </StyledContainer>
+    </KeyboardAvoidingWrapper>
   );
 };
 
-const MyTextInput = function ({
+const TextInput = function ({
   label,
   icon,
   isPassword,
   hidePassword,
   setHidePassword,
+  error,
   ...props
 }) {
   return (
@@ -114,6 +137,14 @@ const MyTextInput = function ({
           />
         </RightIcon>
       )}
+      {error ? (
+        <ErrorMsgContainer>
+          <StyledIcon>
+            <MaterialIcons name='error' size={13} color={brand} />
+          </StyledIcon>
+          <ErrorMsg>{error}</ErrorMsg>
+        </ErrorMsgContainer>
+      ) : null}
     </View>
   );
 };
