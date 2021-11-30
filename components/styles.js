@@ -11,15 +11,21 @@ export const Colors = {
   tertiary: '#1F2937',
   darkLight: '#9CA3AF',
   brand: '#cd0000',
+  modal: '#000000AA',
 };
 
-const { primary, secondary, tertiary, darkLight, brand, green } = Colors;
+const { primary, secondary, tertiary, darkLight, brand, modal } = Colors;
 
 export const StyledContainer = styled.View`
   flex: 1;
   padding: 25px;
   padding-top: ${StatusBarHeight + 30}px;
   background-color: ${primary};
+
+  ${(props) =>
+    props.badge &&
+    `
+    padding-top: 0px;`}
 `;
 
 export const InnerContainer = styled.View`
@@ -104,6 +110,7 @@ export const StyledInputLabel = styled.Text`
   color: ${tertiary};
   font-size: 13px;
   text-align: left;
+  font-weight: bold;
 `;
 
 export const LeftIcon = styled.View`
@@ -120,25 +127,30 @@ export const RightIcon = styled.TouchableOpacity`
   z-index: 1;
 `;
 
+export const ButtonContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
 export const StyledButton = styled.TouchableOpacity`
   padding: 15px;
   background-color: ${brand};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-vertical: 5px;
+  margin: 10px;
   height: 50px;
+
+  ${(props) =>
+    props.submitting &&
+    `
+    opacity:0.4`}
 `;
 
 export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 16px;
-
-  ${(props) =>
-    props.google == true &&
-    `
-    padding: 25px;
-  `}
 `;
 
 export const MsgBox = styled.Text`
@@ -175,4 +187,78 @@ export const TextLink = styled.TouchableOpacity`
 export const TextLinkContent = styled.Text`
   color: ${brand};
   font-size: 13px;
+`;
+
+export const ModalBackground = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin-top: 22px;
+  background-color: ${modal};
+`;
+
+export const ModalContainer = styled.View`
+  margin: 20px;
+  background-color: ${primary};
+  border-radius: 20px;
+  padding: 35px;
+  align-items: center;
+`;
+
+export const StyledIcon = styled.View`
+  justify-content: center;
+  padding-right: 5px;
+`;
+
+export const ErrorMsgContainer = styled.View`
+  display: flex;
+  margin-top: -8px;
+  flex-direction: row;
+  padding-bottom: 10px;
+`;
+
+export const ErrorMsg = styled.Text`
+  color: ${brand};
+  font-size: 11px;
+`;
+
+export const PanelTitle = styled.Text`
+  font-size: 30px;
+  font-weight: bold;
+  color: ${tertiary};
+  padding-bottom: 5px;
+`;
+
+export const BadgePanel = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const BadgeContainer = styled.View`
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin-horizontal: 10px;
+  width: 150px;
+`;
+
+export const BadgeFrame = styled.View`
+  width: 100px;
+  height: 100px;
+  border-radius: 30px;
+  background-color: ${brand};
+  margin-bottom: 10px;
+  margin-top: 10px;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const BadgeTitle = styled.Text`
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: ${tertiary};
+  text-align: center;
 `;
