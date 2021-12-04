@@ -4,6 +4,9 @@ import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+//login context
+import { useLogin } from './../context/login-provider';
+
 // icons
 import { MaterialIcons, Ionicons, Fontisto } from '@expo/vector-icons';
 import {
@@ -12,7 +15,7 @@ import {
   PageLogo,
   PageTitle,
   StyledFormArea,
-  SubTitle,
+  StyledText,
   LeftIcon,
   RightIcon,
   StyledInputLabel,
@@ -30,8 +33,11 @@ import {
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
+// app loading
+import AppLoader from './../components/app-loader';
+
 // colors
-const { brand, darkLight, primary } = Colors;
+const { theme, darkLight, primary } = Colors;
 
 const userCredential = { icNo: '', password: '' };
 
@@ -43,76 +49,86 @@ const validationSchema = Yup.object({
   password: Yup.string().trim().required('Password is required!'),
 });
 
-const Login = function ({ navigation }) {
+const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
+  const [loginPending, setLoginPending] = useState(false);
+  const { setIsLoggedIn } = useLogin();
   return (
-    <KeyboardAvoidingWrapper>
-      <StyledContainer>
-        <StatusBar style='dark' />
-        <InnerContainer>
-          <PageLogo resizeMode='cover' source={require('../assets/logo.png')} />
-          <PageTitle>Blood Donor App</PageTitle>
-          <SubTitle>Account Login</SubTitle>
-          <Formik
-            initialValues={userCredential}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              setTimeout(() => {
-                console.log(values);
-              }, 3000);
-              navigation.navigate('DrawerStackScreen');
-            }}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-            }) => (
-              <StyledFormArea>
-                <TextInput
-                  label='IC no.'
-                  error={touched.icNo && errors.icNo}
-                  icon='perm-identity'
-                  placeholder='99XXXXXXXXXX'
-                  placeholderTextColor={darkLight}
-                  onChangeText={handleChange('icNo')}
-                  onBlur={handleBlur('icNo')}
-                  value={values.icNo}
-                  keyboardType='number-pad'
-                />
-                <TextInput
-                  label='Password'
-                  error={touched.password && errors.password}
-                  icon='lock'
-                  placeholder='* * * * * * * * *'
-                  placeholderTextColor={darkLight}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  secureTextEntry={hidePassword}
-                  isPassword
-                  hidePassword={hidePassword}
-                  setHidePassword={setHidePassword}
-                />
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Login</ButtonText>
-                </StyledButton>
-                <TextLink>
-                  <TextLinkContent>Forgot password? </TextLinkContent>
-                </TextLink>
-              </StyledFormArea>
-            )}
-          </Formik>
-        </InnerContainer>
-      </StyledContainer>
-    </KeyboardAvoidingWrapper>
+    <>
+      <KeyboardAvoidingWrapper>
+        <StyledContainer isLogin>
+          <StatusBar style='auto' />
+          <InnerContainer isLogin>
+            <PageLogo
+              resizeMode='cover'
+              source={require('../assets/icons/logo.png')}
+            />
+            <PageTitle>Blood Donor App</PageTitle>
+            <StyledText letterSpacing>Account Login</StyledText>
+            <Formik
+              initialValues={userCredential}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                setTimeout(() => {
+                  console.log(values);
+                }, 3000);
+                setIsLoggedIn(true);
+              }}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+              }) => (
+                <StyledFormArea>
+                  <TextInput
+                    label='IC no.'
+                    error={touched.icNo && errors.icNo}
+                    icon='perm-identity'
+                    placeholder='99XXXXXXXXXX'
+                    placeholderTextColor={darkLight}
+                    onChangeText={handleChange('icNo')}
+                    onBlur={handleBlur('icNo')}
+                    value={values.icNo}
+                    keyboardType='number-pad'
+                  />
+                  <TextInput
+                    label='Password'
+                    error={touched.password && errors.password}
+                    icon='lock'
+                    placeholder='* * * * * * * * *'
+                    placeholderTextColor={darkLight}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    secureTextEntry={hidePassword}
+                    isPassword
+                    hidePassword={hidePassword}
+                    setHidePassword={setHidePassword}
+                  />
+                  <StyledButton onPress={handleSubmit}>
+                    <ButtonText>Login</ButtonText>
+                  </StyledButton>
+                  <TextLink
+                    onPress={() => navigation.navigate('ResetPassword')}
+                  >
+                    <TextLinkContent>Forgot password? </TextLinkContent>
+                  </TextLink>
+                </StyledFormArea>
+              )}
+            </Formik>
+          </InnerContainer>
+        </StyledContainer>
+      </KeyboardAvoidingWrapper>
+      {loginPending ? <AppLoader /> : null}
+    </>
   );
 };
 
-const TextInput = function ({
+const TextInput = ({
   label,
   icon,
   isPassword,
@@ -120,11 +136,11 @@ const TextInput = function ({
   setHidePassword,
   error,
   ...props
-}) {
+}) => {
   return (
     <View>
       <LeftIcon>
-        <MaterialIcons name={icon} size={25} color={brand} />
+        <MaterialIcons name={icon} size={25} color={theme} />
       </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
@@ -140,7 +156,7 @@ const TextInput = function ({
       {error ? (
         <ErrorMsgContainer>
           <StyledIcon>
-            <MaterialIcons name='error' size={13} color={brand} />
+            <MaterialIcons name='error' size={13} color={theme} />
           </StyledIcon>
           <ErrorMsg>{error}</ErrorMsg>
         </ErrorMsgContainer>
