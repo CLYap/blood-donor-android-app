@@ -10,35 +10,41 @@ export const Colors = {
   secondary: '#E5E7E8',
   tertiary: '#1F2937',
   darkLight: '#9CA3AF',
-  brand: '#cd0000',
-  modal: '#000000AA',
+  theme: '#cd0000',
 };
 
-const { primary, secondary, tertiary, darkLight, brand, modal } = Colors;
+const { primary, secondary, tertiary, darkLight, theme } = Colors;
 
 export const StyledContainer = styled.View`
   flex: 1;
-  padding: 25px;
-  padding-top: ${StatusBarHeight + 30}px;
-  background-color: ${primary};
+  padding-top: ${StatusBarHeight + 100}px;
+  background-color: ${theme};
 
   ${(props) =>
-    props.badge &&
+    props.isLogin &&
     `
-    padding-top: 0px;`}
+    background-color: ${primary};
+    padding: 25px;
+    padding-top: ${StatusBarHeight + 50}px;
+    `}
 `;
 
 export const InnerContainer = styled.View`
-  flex: 1;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-`;
+  background-color: ${primary};
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding: 20px;
 
-export const WelcomeContainer = styled(InnerContainer)`
-  padding: 25px;
-  padding-top: 10px;
-  justify-content: center;
+  ${(props) =>
+    props.isLogin &&
+    `
+    padding-right: 0px;
+    padding-left: 0px;
+    flex: 1;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  `}
 `;
 
 export const PageLogo = styled.Image`
@@ -57,36 +63,106 @@ export const Avatar = styled.Image`
   margin-top: 10px;
 `;
 
-export const WelcomeImage = styled.Image`
-  height: 50%;
-  min-width: 100%;
+export const ImageIconContainer = styled.View`
+  position: relative;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ImageIcon = styled.Image`
+  width: 100px;
+  height: 100px;
+  margin-left: 12px;
 `;
 
 export const PageTitle = styled.Text`
   font-size: 25px;
   text-align: center;
   font-weight: bold;
-  color: ${brand};
+  color: ${theme};
   padding: 10px;
 
   ${(props) =>
-    props.welcome &&
+    props.left &&
     `
-    font-size: 35px;`}
+    text-align: left;
+  `}
 `;
 
-export const SubTitle = styled.Text`
+export const StyledText = styled.Text`
   font-size: 15px;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
+  margin-bottom: 15px;
   font-weight: bold;
+  align-self: center;
   color: ${tertiary};
 
   ${(props) =>
-    props.welcome &&
+    props.left &&
     `
-  margin-bottom: 5px;
-  font-weight: normal;`}
+    align-self: flex-start;
+  `}
+
+  ${(props) =>
+    props.fontWeightNormal &&
+    `
+    font-weight: normal;
+  `}
+
+  ${(props) =>
+    props.letterSpacing &&
+    `
+    letter-spacing: 1px;
+  `}
+`;
+
+export const StyledLabel = styled.Text`
+  font-size: 15px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+
+  ${(props) =>
+    props.imageText &&
+    `
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: ${primary}; 
+    position: absolute;
+    top: 60px;
+    left: 33px;   
+    `}
+
+  ${(props) =>
+    props.lightText &&
+    `
+    font-weight: bold;
+    padding: 0px;
+    margin: auto;
+    font-size: 14px;
+    color: ${darkLight}; 
+  `}
+  
+  ${(props) =>
+    props.themeText &&
+    `
+    font-weight: bold;
+    padding: 0px;
+    margin: auto;
+    font-size: 14px;
+    color: ${theme}; 
+    align-self: center;
+  `}
+
+  ${(props) =>
+    props.lightLabel &&
+    `
+    margin-bottom: 5px;
+    font-weight: bold;
+    padding: 0px;
+    padding-bottom: 0px;
+    font-size: 15px;
+    color: ${darkLight}; 
+  `}
 `;
 
 export const StyledFormArea = styled.View`
@@ -125,17 +201,25 @@ export const RightIcon = styled.TouchableOpacity`
   top: 32px;
   position: absolute;
   z-index: 1;
+
+  ${(props) =>
+    props.closeButton &&
+    `
+    right: 0px;
+    top: 0px;
+    padding: 5px;
+  `}
 `;
 
 export const ButtonContainer = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
   padding: 15px;
-  background-color: ${brand};
+  background-color: ${theme};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
@@ -185,29 +269,35 @@ export const TextLink = styled.TouchableOpacity`
 `;
 
 export const TextLinkContent = styled.Text`
-  color: ${brand};
+  color: ${theme};
   font-size: 13px;
 `;
 
-export const ModalBackground = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  margin-top: 22px;
-  background-color: ${modal};
-`;
-
 export const ModalContainer = styled.View`
-  margin: 20px;
+  margin: 15px;
   background-color: ${primary};
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 35px;
-  align-items: center;
+
+  ${(props) =>
+    props.detailModal &&
+    `
+    background-color: ${secondary};
+    border-radius: 10px;
+    position: relative;
+    padding: 25px;
+    margin: 3px;`}
 `;
 
 export const StyledIcon = styled.View`
   justify-content: center;
   padding-right: 5px;
+
+  ${(props) =>
+    props.menu &&
+    `
+    padding-right: 15px;
+  `}
 `;
 
 export const ErrorMsgContainer = styled.View`
@@ -218,7 +308,7 @@ export const ErrorMsgContainer = styled.View`
 `;
 
 export const ErrorMsg = styled.Text`
-  color: ${brand};
+  color: ${theme};
   font-size: 11px;
 `;
 
@@ -248,7 +338,7 @@ export const BadgeFrame = styled.View`
   width: 100px;
   height: 100px;
   border-radius: 30px;
-  background-color: ${brand};
+  background-color: ${theme};
   margin-bottom: 10px;
   margin-top: 10px;
   align-self: center;
@@ -261,4 +351,74 @@ export const BadgeTitle = styled.Text`
   margin-bottom: 20px;
   color: ${tertiary};
   text-align: center;
+`;
+
+export const CardContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const CardPanel = styled.View`
+  background-color: ${secondary};
+  padding-vertical: 20px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+`;
+
+export const CardView = styled.TouchableOpacity`
+  flex-direction: row;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 15px;
+  padding: 3px;
+  background-color: ${primary};
+  border-radius: 10px;
+`;
+
+export const CardItem = styled.View`
+  flex-direction: column;
+  padding-vertical: 20px;
+  padding-left: 10px;
+
+  ${(props) =>
+    props.header &&
+    `
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    background-color: ${primary};
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  `}
+
+  ${(props) =>
+    props.detail &&
+    `
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: ${primary};
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+  `}
+`;
+
+export const CardTextPanel = styled.View`
+  flex-direction: row;
+  padding-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
+export const CardText = styled.Text`
+  font-size: 14px;
+  justify-content: center;
+  padding-vertical: 1px;
 `;

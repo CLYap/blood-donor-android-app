@@ -1,13 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { View, Text, Platform } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   StyledContainer,
   InnerContainer,
   StyledButton,
   ButtonText,
+  Colors,
+  StyledLabel,
 } from './../components/styles';
+
+const { theme } = Colors;
 
 const Appointment = function ({ navigation }) {
   const today = new Date();
@@ -38,9 +41,9 @@ const Appointment = function ({ navigation }) {
   };
   return (
     <StyledContainer>
+      <StatusBar barStyle='light-content' backgroundColor={theme} />
       <InnerContainer>
-        <StatusBar style='auto' />
-        <Text>{text}</Text>
+        <StyledLabel>{text}</StyledLabel>
         <StyledButton onPress={() => showMode('date')}>
           <ButtonText>Select Date</ButtonText>
         </StyledButton>
