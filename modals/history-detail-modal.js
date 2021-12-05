@@ -3,17 +3,14 @@ import Modal from 'react-native-modal';
 import { StatusBar } from 'expo-status-bar';
 import {
   ModalContainer,
-  StyledLabel,
   ButtonContainer,
   RightIcon,
-  ButtonText,
-  StyledIcon,
   Colors,
   CardContainer,
-  CardPanel,
-  CardView,
   CardItem,
   StyledText,
+  DarkLightStyledText,
+  ThemeStyledText,
   Line,
 } from './../components/styles';
 import { Ionicons } from '@expo/vector-icons';
@@ -33,54 +30,72 @@ const HistoryDetailModal = ({ isOpen, onClose, details }) => {
           <Ionicons name='close-sharp' size={35} color={theme} />
         </RightIcon>
         <CardItem header>
-          <StyledLabel lightLabel>Date</StyledLabel>
-          <StyledText left fontWeightNormal>
+          <DarkLightStyledText fontWeightBold fontSize15>
+            Date
+          </DarkLightStyledText>
+          <StyledText marginBottom17>
             {moment(details.date, 'DD-MM-YYYY').format('D MMMM YYYY')}
           </StyledText>
-          <StyledLabel lightLabel>Time</StyledLabel>
-          <StyledText left fontWeightNormal>
+          <DarkLightStyledText fontWeightBold fontSize15>
+            Time
+          </DarkLightStyledText>
+          <StyledText marginBottom17>
             {moment(details.time, 'HHmm').format('LT')}
           </StyledText>
-          <StyledLabel lightLabel>Blood Centre (ID)</StyledLabel>
-          <StyledText left fontWeightNormal>
+          <DarkLightStyledText fontWeightBold fontSize15>
+            Blood Centre (ID)
+          </DarkLightStyledText>
+          <StyledText marginBottom17>
             {details.centerName} ({details.centerID})
           </StyledText>
-          <StyledLabel lightLabel>Blood Group</StyledLabel>
-          <StyledText left fontWeightNormal>
-            {details.bloodGroup}
-          </StyledText>
-          <StyledLabel lightLabel>Blood Unit Collected ( /mL )</StyledLabel>
-          <StyledText left fontWeightNormal>
-            {details.bloodUnit}
-          </StyledText>
-          <StyledLabel lightLabel>Collected by</StyledLabel>
-          <StyledText left fontWeightNormal>
+          <DarkLightStyledText fontWeightBold fontSize15>
+            Blood Group
+          </DarkLightStyledText>
+          <StyledText marginBottom17>{details.bloodGroup}</StyledText>
+          <DarkLightStyledText fontWeightBold fontSize15>
+            Blood Unit Collected ( /mL )
+          </DarkLightStyledText>
+          <StyledText marginBottom17>{details.bloodUnit}</StyledText>
+          <DarkLightStyledText fontWeightBold fontSize15>
+            Collected by
+          </DarkLightStyledText>
+          <StyledText marginBottom17>
             {details.staffName} ({details.staffUUID})
           </StyledText>
         </CardItem>
         <Line />
-        <StyledText left letterSpacing>
+        <StyledText letterSpacing fontWeightBold marginBottom17>
           Health Vitals
         </StyledText>
         <CardContainer>
           <CardItem detail>
-            <StyledLabel lightText>Pressure</StyledLabel>
-            <StyledLabel themeText>{details.bP}</StyledLabel>
+            <DarkLightStyledText fontWeightBold fontSize15>
+              Pressure
+            </DarkLightStyledText>
+            <ThemeStyledText fontWeightBold>{details.bP}</ThemeStyledText>
           </CardItem>
           <CardItem detail>
-            <StyledLabel lightText>Haemoglobin</StyledLabel>
-            <StyledLabel themeText>{details.heamoglobinCount}gm/dL</StyledLabel>
+            <DarkLightStyledText fontWeightBold fontSize15>
+              Haemoglobin
+            </DarkLightStyledText>
+            <ThemeStyledText fontWeightBold fontSize15>
+              {details.heamoglobinCount}gm/dL
+            </ThemeStyledText>
           </CardItem>
           <CardItem detail>
-            <StyledLabel lightText>Pulse</StyledLabel>
-            <StyledLabel themeText>{details.pulse}bpm</StyledLabel>
+            <DarkLightStyledText fontWeightBold fontSize15>
+              Pulse
+            </DarkLightStyledText>
+            <ThemeStyledText fontWeightBold>{details.pulse}bpm</ThemeStyledText>
           </CardItem>
         </CardContainer>
         <CardItem detail>
-          <StyledLabel lightText>COVID-19 Antibody Test</StyledLabel>
-          <StyledLabel themeText>
-            {details.covidAntibody == '+' ? 'Positive' : 'Negative'}
-          </StyledLabel>
+          <DarkLightStyledText fontWeightBold fontSize15>
+            COVID-19 Antibody Test
+          </DarkLightStyledText>
+          <ThemeStyledText fontWeightBold>
+            {details.covidAntibody == '+' ? 'POSITIVE' : 'NEGATIVE'}
+          </ThemeStyledText>
         </CardItem>
       </ModalContainer>
     </Modal>

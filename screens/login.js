@@ -12,7 +12,7 @@ import { MaterialIcons, Ionicons, Fontisto } from '@expo/vector-icons';
 import {
   StyledContainer,
   InnerContainer,
-  PageLogo,
+  StyledImage,
   PageTitle,
   StyledFormArea,
   StyledText,
@@ -56,15 +56,18 @@ const Login = ({ navigation }) => {
   return (
     <>
       <KeyboardAvoidingWrapper>
-        <StyledContainer isLogin>
+        <StyledContainer whiteBackground>
           <StatusBar style='auto' />
           <InnerContainer isLogin>
-            <PageLogo
+            <StyledImage
+              pageLogo
               resizeMode='cover'
               source={require('../assets/icons/logo.png')}
             />
-            <PageTitle>Blood Donor App</PageTitle>
-            <StyledText letterSpacing>Account Login</StyledText>
+            <PageTitle textAlignCenter>Blood Donor App</PageTitle>
+            <StyledText letterSpacing alignSelfCenter fontWeightBold fontSize15>
+              Account Login
+            </StyledText>
             <Formik
               initialValues={userCredential}
               validationSchema={validationSchema}

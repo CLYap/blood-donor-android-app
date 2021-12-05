@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import {
   ModalContainer,
   PageTitle,
-  StyledLabel,
+  StyledText,
   ButtonContainer,
   StyledButton,
   ButtonText,
@@ -14,14 +14,16 @@ const LogoutModal = ({ isOpen, onClose, setIsLoggedIn }) => {
   return (
     <Modal isVisible={isOpen} coverScreen={true} swipeDirection='right'>
       <ModalContainer>
-        <PageTitle left>Log Out?</PageTitle>
-        <StyledLabel>Are you sure to log out?</StyledLabel>
+        <PageTitle>Sign Out?</PageTitle>
+        <StyledText paddingLeft10 fontSize15 fontWeightBold marginBottom17>
+          Are you sure to sign out?
+        </StyledText>
         <ButtonContainer>
           <StyledButton onPress={onClose}>
             <ButtonText>Cancel</ButtonText>
           </StyledButton>
           <StyledButton onPress={setIsLoggedIn}>
-            <ButtonText>Logout</ButtonText>
+            <ButtonText>Sign Out</ButtonText>
           </StyledButton>
         </ButtonContainer>
       </ModalContainer>

@@ -7,7 +7,7 @@ import {
   StyledButton,
   ButtonText,
   Colors,
-  StyledLabel,
+  StyledText,
 } from './../components/styles';
 
 const { theme } = Colors;
@@ -43,7 +43,7 @@ const Appointment = function ({ navigation }) {
     <StyledContainer>
       <StatusBar barStyle='light-content' backgroundColor={theme} />
       <InnerContainer>
-        <StyledLabel>{text}</StyledLabel>
+        <StyledText>{text}</StyledText>
         <StyledButton onPress={() => showMode('date')}>
           <ButtonText>Select Date</ButtonText>
         </StyledButton>
