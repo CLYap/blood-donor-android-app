@@ -1,48 +1,85 @@
-import React, { useState } from 'react';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+import React from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeStack from './stacks/home-stack';
 import ProfileStack from './stacks/profile-stack';
 import AppointmentStack from './stacks/appointment-stack';
 import DonationHistoryStack from './stacks/donation-history-stack';
 import BadgesStack from './stacks/badges-stack';
-import LogoutModal from './../modals/logout-modal';
-import { useLogin } from './../context/login-provider';
+import SideBar from './../components/side-bar';
+import {
+  FontAwesome5,
+  MaterialIcons,
+  Fontisto,
+  FontAwesome,
+} from '@expo/vector-icons';
+import { Colors } from './../components/styles';
+
+const { theme, primary, tertiary, lightTheme } = Colors;
 
 const Drawer = createDrawerNavigator();
-
-function CustomDrawerContent(props) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const { setIsLoggedIn } = useLogin();
-
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem label='Logout' onPress={() => setModalVisible(true)} />
-      <LogoutModal
-        isOpen={modalVisible}
-        onClose={() => setModalVisible(false)}
-        setIsLoggedIn={() => setIsLoggedIn(false)}
-      />
-    </DrawerContentScrollView>
-  );
-}
 
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{ headerShown: false }}
+      drawerContent={(props) => <SideBar {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerActiveBackgroundColor: lightTheme,
+        drawerActiveTintColor: theme,
+        drawerInactiveTintColor: tertiary,
+        drawerLabelStyle: { marginLeft: -20, fontSize: 14, fontWeight: 'bold' },
+      }}
     >
-      <Drawer.Screen name='Home' component={HomeStack} />
-      <Drawer.Screen name='Profile' component={ProfileStack} />
-      <Drawer.Screen name='Appointment' component={AppointmentStack} />
-      <Drawer.Screen name='DonationHistory' component={DonationHistoryStack} />
-      <Drawer.Screen name='Badges' component={BadgesStack} />
+      <Drawer.Screen
+        name='Home'
+        component={HomeStack}
+        options={{
+          title: 'Home',
+          drawerIcon: ({ color }) => (
+            <FontAwesome5 name='home' size={24} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name='Profile'
+        component={ProfileStack}
+        options={{
+          title: 'Profile',
+          drawerIcon: ({ color }) => (
+            <MaterialIcons name='person' size={28} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name='Appointment'
+        component={AppointmentStack}
+        options={{
+          title: 'Appointment',
+          drawerIcon: ({ color }) => (
+            <FontAwesome5 name='calendar-alt' size={26} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name='DonationHistory'
+        component={DonationHistoryStack}
+        options={{
+          title: 'Donation History',
+          drawerIcon: ({ color }) => (
+            <Fontisto name='history' size={24} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name='Badges'
+        component={BadgesStack}
+        options={{
+          title: 'Badges',
+          drawerIcon: ({ color }) => (
+            <FontAwesome name='trophy' size={24} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };

@@ -11,8 +11,8 @@ import {
   CardText,
   StyledIcon,
   RightIcon,
-  ImageIcon,
-  StyledLabel,
+  StyledImage,
+  StyledText,
   ImageIconContainer,
 } from './../components/styles';
 import HistoryDetailModal from './../modals/history-detail-modal';
@@ -164,11 +164,12 @@ const DonationHistory = () => {
               }}
             >
               <ImageIconContainer>
-                <ImageIcon
+                <StyledImage
+                  imageIcon
                   resizeMode='cover'
                   source={require('../assets/icons/blood-bag.png')}
                 />
-                <StyledLabel imageText>{data.bloodUnit} mL</StyledLabel>
+                <StyledText imageText>{data.bloodUnit} mL</StyledText>
               </ImageIconContainer>
               <CardItem>
                 <CardTextPanel>
