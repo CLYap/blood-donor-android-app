@@ -23,7 +23,7 @@ const Badges = () => {
   return (
     <StyledContainer>
       <StatusBar barStyle='light-content' backgroundColor={theme} />
-      <InnerContainer>
+      <InnerContainer padding20>
         <ScrollView showsVerticalScrollIndicator={false}>
           <PanelTitle>General</PanelTitle>
           <BadgePanel>

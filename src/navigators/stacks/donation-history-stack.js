@@ -1,37 +1,25 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Appointment from '../../screens/appointment';
+import DonationHistory from '../../screens/donation-history';
 import { Colors, StyledIcon } from '../../components/styles';
 import { Feather } from '@expo/vector-icons';
+import { HeaderScreenOptions } from '../../components/utils';
 
 const { primary, theme } = Colors;
 
 const Stack = createNativeStackNavigator();
 
-const headerScreenOptions = {
-  headerStyle: {
-    backgroundColor: theme,
-  },
-  headerTintColor: primary,
-  headerTransparent: true,
-  headerTitle: '',
-  headerLeftContainerStyle: {
-    paddingLeft: 20,
-  },
-  headerShadowVisible: false,
-};
-
-const AppointmentStack = ({ navigation }) => {
+const DonationHistoryStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      screenOptions={headerScreenOptions}
-      initialRouteName='AppointmentScreen'
+      screenOptions={HeaderScreenOptions}
+      initialRouteName='DonationHistoryScreen'
     >
       <Stack.Screen
-        name='AppointmentScreen'
-        component={Appointment}
+        name='DonationHistoryScreen'
+        component={DonationHistory}
         options={({ navigation }) => ({
-          title: 'Appointment',
+          title: 'Donation History',
           headerLeft: () => (
             <StyledIcon menu>
               <Feather
@@ -48,4 +36,4 @@ const AppointmentStack = ({ navigation }) => {
   );
 };
 
-export default AppointmentStack;
+export default DonationHistoryStack;

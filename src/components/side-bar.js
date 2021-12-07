@@ -26,7 +26,10 @@ function SideBar(props) {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
-        <StyledImage avatar source={require('./../assets/icons/profile.png')} />
+        <StyledImage
+          avatar
+          source={require('../../assets/icons/profile.png')}
+        />
         <StyledText
           letterSpacing
           alignSelfCenter

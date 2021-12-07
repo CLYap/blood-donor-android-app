@@ -5,13 +5,13 @@ import { Colors } from './../components/styles';
 
 const { theme } = Colors;
 
-const Profile = () => {
+const EditProfileHealth = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View>
       <StatusBar barStyle='light-content' backgroundColor={theme} />
-      <Text>Profile</Text>
+      <Text>EditProfileHealth</Text>
     </View>
   );
 };
 
-export default Profile;
+export default EditProfileHealth;

@@ -167,7 +167,7 @@ const DonationHistory = () => {
                 <StyledImage
                   imageIcon
                   resizeMode='cover'
-                  source={require('../assets/icons/blood-bag.png')}
+                  source={require('../../assets/icons/blood-bag.png')}
                 />
                 <StyledText imageText>{data.bloodUnit} mL</StyledText>
               </ImageIconContainer>
