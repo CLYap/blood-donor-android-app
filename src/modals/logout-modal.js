@@ -5,7 +5,7 @@ import {
   ModalContainer,
   PageTitle,
   StyledText,
-  ButtonContainer,
+  FlexRowContainer,
   StyledButton,
   ButtonText,
 } from './../components/styles';
@@ -18,14 +18,14 @@ const LogoutModal = ({ isOpen, onClose, setIsLoggedIn }) => {
         <StyledText paddingLeft10 fontSize15 fontWeightBold marginBottom17>
           Are you sure to sign out?
         </StyledText>
-        <ButtonContainer>
+        <FlexRowContainer>
           <StyledButton onPress={onClose}>
             <ButtonText>Cancel</ButtonText>
           </StyledButton>
           <StyledButton onPress={setIsLoggedIn}>
             <ButtonText>Sign Out</ButtonText>
           </StyledButton>
-        </ButtonContainer>
+        </FlexRowContainer>
       </ModalContainer>
     </Modal>
   );

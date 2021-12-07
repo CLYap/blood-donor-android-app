@@ -42,7 +42,7 @@ const Appointment = function ({ navigation }) {
   return (
     <StyledContainer>
       <StatusBar barStyle='light-content' backgroundColor={theme} />
-      <InnerContainer>
+      <InnerContainer padding20>
         <StyledText>{text}</StyledText>
         <StyledButton onPress={() => showMode('date')}>
           <ButtonText>Select Date</ButtonText>

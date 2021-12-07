@@ -3,7 +3,6 @@ import Modal from 'react-native-modal';
 import { StatusBar } from 'expo-status-bar';
 import {
   ModalContainer,
-  ButtonContainer,
   RightIcon,
   Colors,
   CardContainer,

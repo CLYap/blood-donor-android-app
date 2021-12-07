@@ -7,7 +7,7 @@ const AppLoader = () => {
     <View style={[StyleSheet.absoluteFillObject, styles.container]}>
       <LottieView
         style={{ width: 200 }}
-        source={require('../assets/spinner-loader.json')}
+        source={require('../../assets/spinner-loader.json')}
         autoPlay
         loop
       />

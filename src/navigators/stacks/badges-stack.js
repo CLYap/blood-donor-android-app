@@ -3,28 +3,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Badges from '../../screens/badges';
 import { Colors, StyledIcon } from '../../components/styles';
 import { Feather } from '@expo/vector-icons';
+import { HeaderScreenOptions } from '../../components/utils';
 
 const { primary, theme } = Colors;
 
 const Stack = createNativeStackNavigator();
 
-const headerScreenOptions = {
-  headerStyle: {
-    backgroundColor: theme,
-  },
-  headerTintColor: primary,
-  headerTransparent: true,
-  headerTitle: '',
-  headerLeftContainerStyle: {
-    paddingLeft: 20,
-  },
-  headerShadowVisible: false,
-};
-
 const BadgesStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      screenOptions={headerScreenOptions}
+      screenOptions={HeaderScreenOptions}
       initialRouteName='BadgesScreen'
     >
       <Stack.Screen

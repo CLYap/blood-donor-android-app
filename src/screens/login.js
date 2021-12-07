@@ -62,7 +62,7 @@ const Login = ({ navigation }) => {
             <StyledImage
               pageLogo
               resizeMode='cover'
-              source={require('../assets/icons/logo.png')}
+              source={require('../../assets/icons/logo.png')}
             />
             <PageTitle textAlignCenter>Blood Donor App</PageTitle>
             <StyledText letterSpacing alignSelfCenter fontWeightBold fontSize15>
@@ -146,7 +146,11 @@ const TextInput = ({
         <MaterialIcons name={icon} size={25} color={theme} />
       </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
-      <StyledTextInput {...props} />
+      {error ? (
+        <StyledTextInput error {...props} />
+      ) : (
+        <StyledTextInput {...props} />
+      )}
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons

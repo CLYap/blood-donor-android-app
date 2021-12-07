@@ -26,7 +26,7 @@ export const StyledContainer = styled.View`
     `
     background-color: ${primary};
     padding: 25px;
-    padding-top: ${StatusBarHeight + 50}px;
+    padding-top: ${StatusBarHeight + 40}px;
     `}
 `;
 
@@ -34,17 +34,31 @@ export const InnerContainer = styled.View`
   background-color: ${primary};
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  padding: 20px;
 
   ${(props) =>
     props.isLogin &&
     `
-    padding-right: 0px;
-    padding-left: 0px;
     flex: 1;
     width: 100%;
     align-items: center;
-    justify-content: center;
+  `}
+
+  ${(props) =>
+    props.alignItemsCenter &&
+    `
+    align-items: center;
+  `}
+
+  ${(props) =>
+    props.padding20 &&
+    `
+    padding: 20px;
+  `}
+
+  ${(props) =>
+    props.paddingTop30 &&
+    `
+    padding-top: 30px;
   `}
 `;
 
@@ -209,11 +223,49 @@ export const StyledTextInput = styled.TextInput`
   padding-left: 55px;
   padding-right: 55px;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 15px;
   height: 50px;
   margin-vertical: 3px;
   margin-bottom: 10px;
   color: ${tertiary};
+
+  ${(props) =>
+    props.error &&
+    `
+    border-color: ${theme};
+    border-width: 1px;
+  `}
+`;
+
+export const FormInputContainer = styled.View`
+  width: 100%;
+  position: relative;
+`;
+
+export const FormTextInput = styled(StyledTextInput)`
+  padding: 6px;
+  padding-top: 22px;
+  padding-bottom: 6px;
+  background-color: ${primary};
+  border-width: 1.75px;
+  border-color: ${secondary};
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  ${(props) =>
+    props.readOnly == true &&
+    `
+    background-color: ${secondary};
+    opacity: 0.7;
+  `}
+
+  ${(props) =>
+    props.error &&
+    `
+    border-color: ${theme};
+    border-width: 0.8px;
+  `}
 `;
 
 export const StyledInputLabel = styled.Text`
@@ -221,6 +273,15 @@ export const StyledInputLabel = styled.Text`
   font-size: 13px;
   text-align: left;
   font-weight: bold;
+`;
+
+export const FormInputLabel = styled(StyledInputLabel)`
+  color: ${theme};
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  padding: 5px;
+  z-index: 1;
 `;
 
 export const LeftIcon = styled.View`
@@ -243,32 +304,64 @@ export const RightIcon = styled.TouchableOpacity`
     top: 0px;
     padding: 5px;
   `}
+
+  ${(props) =>
+    props.formButton &&
+    `
+    right: 10px;
+    top: 12px;
+    padding: 5px;
+  `}
 `;
 
-export const ButtonContainer = styled.View`
+export const FlexRowContainer = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  ${(props) =>
+    props.justifyFlexEnd &&
+    `
+    justify-content: flex-end;
+  `}
+
+  ${(props) =>
+    props.paddingVertical20 &&
+    `
+    padding-vertical: 20px;
+  `}
 `;
 
 export const StyledButton = styled.TouchableOpacity`
-  padding: 15px;
+  padding: 12px;
   background-color: ${theme};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin: 10px;
-  height: 50px;
+  margin: 8px;
+  min-width: 90px;
 
   ${(props) =>
     props.submitting &&
     `
     opacity:0.4`}
+
+  ${(props) =>
+    props.lightButton &&
+    `
+    background-color: ${secondary}; 
+  `}
 `;
 
 export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 16px;
+
+  ${(props) =>
+    props.tertiaryText &&
+    `
+    color: ${tertiary}; 
+  `};
 `;
 
 export const Line = styled.View`
@@ -327,6 +420,15 @@ export const StyledIcon = styled.View`
     `
     padding-right: 15px;
   `}
+
+  ${(props) =>
+    props.right &&
+    `
+    position: absolute;
+    padding: 3px;
+    top: 14px;
+    right: 8px;
+  `}
 `;
 
 export const ErrorMsgContainer = styled.View`
@@ -334,6 +436,12 @@ export const ErrorMsgContainer = styled.View`
   margin-top: -8px;
   flex-direction: row;
   padding-bottom: 10px;
+
+  ${(props) =>
+    props.paddingLeft5 &&
+    `
+    padding-left: 5px;
+  `}
 `;
 
 export const ErrorMsg = styled.Text`

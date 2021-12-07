@@ -1,37 +1,25 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DonationHistory from '../../screens/donation-history';
+import Home from '../../screens/home';
 import { Colors, StyledIcon } from '../../components/styles';
 import { Feather } from '@expo/vector-icons';
+import { HeaderScreenOptions } from '../../components/utils';
 
 const { primary, theme } = Colors;
 
 const Stack = createNativeStackNavigator();
 
-const headerScreenOptions = {
-  headerStyle: {
-    backgroundColor: theme,
-  },
-  headerTintColor: primary,
-  headerTransparent: true,
-  headerTitle: '',
-  headerLeftContainerStyle: {
-    paddingLeft: 20,
-  },
-  headerShadowVisible: false,
-};
-
-const DonationHistoryStack = ({ navigation }) => {
+const HomeStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      screenOptions={headerScreenOptions}
-      initialRouteName='DonationHistoryScreen'
+      screenOptions={HeaderScreenOptions}
+      initialRouteName='HomeScreen'
     >
       <Stack.Screen
-        name='DonationHistoryScreen'
-        component={DonationHistory}
+        name='HomeScreen'
+        component={Home}
         options={({ navigation }) => ({
-          title: 'Donation History',
+          title: 'Home',
           headerLeft: () => (
             <StyledIcon menu>
               <Feather
@@ -48,4 +36,4 @@ const DonationHistoryStack = ({ navigation }) => {
   );
 };
 
-export default DonationHistoryStack;
+export default HomeStack;
