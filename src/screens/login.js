@@ -112,7 +112,7 @@ const Login = ({ navigation }) => {
                     hidePassword={hidePassword}
                     setHidePassword={setHidePassword}
                   />
-                  <StyledButton onPress={handleSubmit}>
+                  <StyledButton margin5 onPress={handleSubmit}>
                     <ButtonText>Login</ButtonText>
                   </StyledButton>
                   <TextLink
