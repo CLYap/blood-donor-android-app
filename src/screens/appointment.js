@@ -44,10 +44,10 @@ const Appointment = function ({ navigation }) {
       <StatusBar barStyle='light-content' backgroundColor={theme} />
       <InnerContainer padding20>
         <StyledText>{text}</StyledText>
-        <StyledButton onPress={() => showMode('date')}>
+        <StyledButton margin5 onPress={() => showMode('date')}>
           <ButtonText>Select Date</ButtonText>
         </StyledButton>
-        <StyledButton onPress={() => navigation.navigate('Login')}>
+        <StyledButton margin5 onPress={() => navigation.navigate('Login')}>
           <ButtonText>Back</ButtonText>
         </StyledButton>
       </InnerContainer>

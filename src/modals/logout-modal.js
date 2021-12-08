@@ -19,10 +19,10 @@ const LogoutModal = ({ isOpen, onClose, setIsLoggedIn }) => {
           Are you sure to sign out?
         </StyledText>
         <FlexRowContainer>
-          <StyledButton onPress={onClose}>
+          <StyledButton margin5 onPress={onClose}>
             <ButtonText>Cancel</ButtonText>
           </StyledButton>
-          <StyledButton onPress={setIsLoggedIn}>
+          <StyledButton margin5 onPress={setIsLoggedIn}>
             <ButtonText>Sign Out</ButtonText>
           </StyledButton>
         </FlexRowContainer>

@@ -25,7 +25,7 @@ const HistoryDetailModal = ({ isOpen, onClose, details }) => {
       animationOut='slideOutRight'
     >
       <ModalContainer detailModal>
-        <RightIcon closeButton onPress={onClose}>
+        <RightIcon top onPress={onClose}>
           <Ionicons name='close-sharp' size={35} color={theme} />
         </RightIcon>
         <CardItem header>

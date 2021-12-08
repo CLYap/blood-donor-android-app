@@ -37,6 +37,11 @@ import AppLoader from './../components/app-loader';
 import { Picker } from '@react-native-picker/picker';
 
 import { States } from './../components/utils';
+
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import { setGender, setDOB } from '../components/redux/actions';
+
 // colors
 const { theme, darkLight, primary } = Colors;
 
@@ -70,8 +75,10 @@ const validationSchema = Yup.object({
   //email: Yup.string().email('Invalid email').required('Email is required!'),
 });
 
-const EditProfileGeneral = () => {
+const EditProfileGeneral = ({ navigation }) => {
   const [loginPending, setLoginPending] = useState(false);
+  const { gender, dob } = useSelector((state) => state.donorReducer);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -84,6 +91,8 @@ const EditProfileGeneral = () => {
               validationSchema={validationSchema}
               onSubmit={(values) => {
                 console.log(values);
+                dispatch(setGender(values.gender));
+                dispatch(setDOB(values.dob));
                 setTimeout(() => {
                   console.log(values);
                 }, 3000);
@@ -204,10 +213,14 @@ const EditProfileGeneral = () => {
                     value={values.email}
                   />
                   <FlexRowContainer justifyFlexEnd paddingVertical20>
-                    <StyledButton lightButton onPress={handleSubmit}>
+                    <StyledButton
+                      margin5
+                      lightButton
+                      onPress={() => navigation.goBack()}
+                    >
                       <ButtonText tertiaryText>Cancel</ButtonText>
                     </StyledButton>
-                    <StyledButton onPress={handleSubmit}>
+                    <StyledButton margin5 onPress={handleSubmit}>
                       <ButtonText>Save</ButtonText>
                     </StyledButton>
                   </FlexRowContainer>

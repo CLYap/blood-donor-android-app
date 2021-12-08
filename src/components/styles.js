@@ -168,6 +168,12 @@ export const StyledText = styled.Text`
   `}
 
   ${(props) =>
+    props.paddingLeft20 &&
+    `
+    padding-left: 20px;
+  `}
+
+  ${(props) =>
     props.imageText &&
     `
     margin-bottom: 20px;
@@ -298,7 +304,7 @@ export const RightIcon = styled.TouchableOpacity`
   z-index: 1;
 
   ${(props) =>
-    props.closeButton &&
+    props.top &&
     `
     right: 0px;
     top: 0px;
@@ -330,6 +336,12 @@ export const FlexRowContainer = styled.View`
     `
     padding-vertical: 20px;
   `}
+
+  ${(props) =>
+    props.justifyFlexStart &&
+    `
+    justify-content: flex-start;
+  `}
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -338,7 +350,7 @@ export const StyledButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin: 8px;
+
   min-width: 90px;
 
   ${(props) =>
@@ -350,6 +362,18 @@ export const StyledButton = styled.TouchableOpacity`
     props.lightButton &&
     `
     background-color: ${secondary}; 
+  `}
+
+  ${(props) =>
+    props.margin5 &&
+    `
+    margin: 5px;
+  `}
+
+  ${(props) =>
+    props.marginBottom17 &&
+    `
+    margin-bottom: 17px;
   `}
 `;
 
@@ -544,6 +568,24 @@ export const CardItem = styled.View`
     justify-content: center;
     align-items: center;
     margin-bottom: 8px;
+  `}
+
+  ${(props) =>
+    props.detailBox &&
+    `
+    border-color: ${secondary};
+    border-radius: 10px;
+    border-width: 1px;
+    margin: 3px;
+    padding-top: 30px;
+    background-color: ${secondary};
+    opacity: 0.8;
+  `}
+
+  ${(props) =>
+    props.margin20 &&
+    `
+    margin: 20px;
   `}
 `;
 
