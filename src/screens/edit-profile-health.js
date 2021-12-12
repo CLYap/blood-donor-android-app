@@ -50,7 +50,6 @@ const profileData = {
   city: '',
   state: '',
   zipCode: '',
-  imgLoc: '',
   bloodType: 'O+',
   weight: '',
   height: '',

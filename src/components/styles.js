@@ -27,7 +27,7 @@ export const StyledContainer = styled.View`
     background-color: ${primary};
     padding: 25px;
     padding-top: ${StatusBarHeight + 40}px;
-    `}
+  `}
 `;
 
 export const InnerContainer = styled.View`
@@ -352,11 +352,6 @@ export const StyledButton = styled.TouchableOpacity`
   border-radius: 5px;
 
   min-width: 90px;
-
-  ${(props) =>
-    props.submitting &&
-    `
-    opacity:0.4`}
 
   ${(props) =>
     props.lightButton &&
