@@ -10,8 +10,14 @@ const AccessLocation = () => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        setErrorMsg('Foreground Permission to access location was denied');
         return;
+      } else {
+        let { status } = await Location.requestBackgroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Background Permission to access location was denied');
+          return;
+        }
       }
 
       let location = await Location.getCurrentPositionAsync({});

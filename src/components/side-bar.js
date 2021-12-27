@@ -5,7 +5,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { useLogin } from './../context/login-provider';
+import { useUserInfo } from './../context/user-info-provider';
 import LogoutModal from './../modals/logout-modal';
 import { Entypo } from '@expo/vector-icons';
 import {
@@ -21,7 +21,7 @@ const { theme, tertiary } = Colors;
 
 function SideBar(props) {
   const [modalVisible, setModalVisible] = useState(false);
-  const { setIsLoggedIn } = useLogin();
+  const { setIsLoggedIn } = useUserInfo();
 
   return (
     <View style={{ flex: 1 }}>

@@ -32,10 +32,6 @@ import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 // app loading
 import AppLoader from './../components/app-loader';
 
-//redux
-import { useSelector, useDispatch } from 'react-redux';
-import { setGender, setDOB } from '../components/redux/actions';
-
 // colors
 const { theme, darkLight, primary } = Colors;
 

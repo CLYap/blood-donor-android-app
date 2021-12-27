@@ -38,10 +38,6 @@ import { Picker } from '@react-native-picker/picker';
 
 import { States } from './../components/utils';
 
-//redux
-import { useSelector, useDispatch } from 'react-redux';
-import { setGender, setDOB } from '../components/redux/actions';
-
 // colors
 const { theme, darkLight, primary } = Colors;
 
