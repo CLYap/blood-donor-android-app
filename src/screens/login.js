@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 //login context
-import { useLogin } from './../context/login-provider';
+import { useUserInfo } from './../context/user-info-provider';
 
 // icons
 import { MaterialIcons, Ionicons, Fontisto } from '@expo/vector-icons';
@@ -52,7 +52,7 @@ const validationSchema = Yup.object({
 const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [loginPending, setLoginPending] = useState(false);
-  const { setIsLoggedIn } = useLogin();
+  const { setIsLoggedIn } = useUserInfo();
   return (
     <>
       <KeyboardAvoidingWrapper>

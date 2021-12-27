@@ -13,9 +13,6 @@ import {
   FlexRowContainer,
   ButtonText,
 } from './../components/styles';
-//redux
-import { useSelector } from 'react-redux';
-import { setGender, setDOB } from '../components/redux/actions';
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
