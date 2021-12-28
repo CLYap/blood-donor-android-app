@@ -6,11 +6,13 @@ import AppointmentStack from './stacks/appointment-stack';
 import DonationHistoryStack from './stacks/donation-history-stack';
 import BadgesStack from './stacks/badges-stack';
 import SideBar from './../components/side-bar';
+import Chat from './../screens/chat';
 import {
   FontAwesome5,
   MaterialIcons,
   Fontisto,
   FontAwesome,
+  Entypo,
 } from '@expo/vector-icons';
 import { Colors } from './../components/styles';
 
@@ -77,6 +79,16 @@ const DrawerNavigator = () => {
           title: 'Badges',
           drawerIcon: ({ color }) => (
             <FontAwesome name='trophy' size={24} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name='Chat'
+        component={Chat}
+        options={{
+          title: 'Live Chat',
+          drawerIcon: ({ color }) => (
+            <Entypo name='chat' size={24} color={color} />
           ),
         }}
       />

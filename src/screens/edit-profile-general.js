@@ -31,9 +31,6 @@ import {
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
-// app loading
-import AppLoader from './../components/app-loader';
-
 import { Picker } from '@react-native-picker/picker';
 
 import { States } from './../components/utils';
@@ -73,8 +70,6 @@ const validationSchema = Yup.object({
 
 const EditProfileGeneral = ({ navigation }) => {
   const [loginPending, setLoginPending] = useState(false);
-  const { gender, dob } = useSelector((state) => state.donorReducer);
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -226,7 +221,6 @@ const EditProfileGeneral = ({ navigation }) => {
           </InnerContainer>
         </StyledContainer>
       </KeyboardAvoidingWrapper>
-      {loginPending ? <AppLoader /> : null}
     </>
   );
 };

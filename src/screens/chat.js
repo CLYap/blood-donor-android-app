@@ -1,3 +1,4 @@
+//@refresh reset
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text } from 'react-native';

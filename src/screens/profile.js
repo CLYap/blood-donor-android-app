@@ -41,8 +41,6 @@ const profileData = {
 };
 
 const Profile = ({ navigation }) => {
-  const { gender, dob } = useSelector((state) => state.donorReducer);
-  const [loadingPending, setLoadingPending] = useState(false);
   return (
     <>
       <KeyboardAvoidingWrapper>
@@ -175,7 +173,6 @@ const Profile = ({ navigation }) => {
           </InnerContainer>
         </StyledContainer>
       </KeyboardAvoidingWrapper>
-      {loadingPending ? <AppLoader /> : null}
     </>
   );
 };

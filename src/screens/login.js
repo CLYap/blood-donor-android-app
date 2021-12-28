@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
@@ -33,8 +33,7 @@ import {
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
-// app loading
-import AppLoader from './../components/app-loader';
+import MessageModal from './../modals/message-modal';
 
 // colors
 const { theme, darkLight, primary } = Colors;
@@ -52,7 +51,19 @@ const validationSchema = Yup.object({
 const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [loginPending, setLoginPending] = useState(false);
-  const { setIsLoggedIn } = useUserInfo();
+  const { loginUser, errorMessage } = useUserInfo();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    errorMessage !== null ? setModalVisible(true) : setModalVisible(false);
+  }, [errorMessage]);
+
+  const onSubmit = (values, { resetForm }) => {
+    loginUser(values);
+    resetForm();
+    errorMessage !== null ? setModalVisible(true) : setModalVisible(false);
+  };
+
   return (
     <>
       <KeyboardAvoidingWrapper>
@@ -71,12 +82,7 @@ const Login = ({ navigation }) => {
             <Formik
               initialValues={userCredential}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                setTimeout(() => {
-                  console.log(values);
-                }, 3000);
-                setIsLoggedIn(true);
-              }}
+              onSubmit={onSubmit}
             >
               {({
                 handleChange,
@@ -123,10 +129,16 @@ const Login = ({ navigation }) => {
                 </StyledFormArea>
               )}
             </Formik>
+            <MessageModal
+              isOpen={modalVisible}
+              onClose={() => {
+                setModalVisible(!modalVisible);
+              }}
+              errorMessage={errorMessage}
+            />
           </InnerContainer>
         </StyledContainer>
       </KeyboardAvoidingWrapper>
-      {loginPending ? <AppLoader /> : null}
     </>
   );
 };
