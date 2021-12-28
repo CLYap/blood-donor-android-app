@@ -21,7 +21,7 @@ const { theme, tertiary } = Colors;
 
 function SideBar(props) {
   const [modalVisible, setModalVisible] = useState(false);
-  const { setIsLoggedIn } = useUserInfo();
+  const { logoutUser, userProfile } = useUserInfo();
 
   return (
     <View style={{ flex: 1 }}>
@@ -38,13 +38,13 @@ function SideBar(props) {
           marginBottom5
           textAlignCenter
         >
-          Yap Chee Ling
+          {userProfile.fName} {userProfile.lName}
         </StyledText>
         <DarkLightStyledText alignSelfCenter marginBottom5>
-          991203146318
+          {userProfile.icNo}
         </DarkLightStyledText>
         <ThemeStyledText alignSelfCenter fontWeightBold marginBottom17 badge>
-          O+
+          {userProfile.bloodType}
         </ThemeStyledText>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
@@ -64,7 +64,7 @@ function SideBar(props) {
         <LogoutModal
           isOpen={modalVisible}
           onClose={() => setModalVisible(false)}
-          setIsLoggedIn={() => setIsLoggedIn(false)}
+          logoutUser={logoutUser}
         />
       </View>
     </View>

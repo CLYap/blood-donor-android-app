@@ -217,6 +217,18 @@ export const PageTitle = styled.Text`
     `
     text-align: center;
   `}
+
+  ${(props) =>
+    props.tertiary &&
+    `
+    color: ${tertiary};
+  `}
+
+  ${(props) =>
+    props.marginBottom5 &&
+    `
+    margin-bottom: 5px;
+  `}
 `;
 
 export const StyledFormArea = styled.View`
@@ -521,6 +533,24 @@ export const CardPanel = styled.View`
   padding-vertical: 20px;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
+
+  ${(props) =>
+    props.borderRound &&
+    `
+    border-radius: 30px;
+  `}
+
+  ${(props) =>
+    props.padding20 &&
+    `
+    padding: 20px;
+  `}
+
+  ${(props) =>
+    props.marginBottom17 &&
+    `
+    margin-bottom: 17px;
+  `}
 `;
 
 export const CardView = styled.TouchableOpacity`

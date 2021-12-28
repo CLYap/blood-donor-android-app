@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // icons
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -28,9 +29,6 @@ import {
 
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
-
-// app loading
-import AppLoader from './../components/app-loader';
 
 // colors
 const { theme, darkLight, primary } = Colors;
@@ -62,8 +60,22 @@ const validationSchema = Yup.object({
 
 const EditProfileHealth = ({ navigation }) => {
   const [loginPending, setLoginPending] = useState(false);
-  const { gender, dob } = useSelector((state) => state.donorReducer);
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    retrieveData();
+  });
+
+  const retrieveData = async () => {
+    try {
+      const data = await AsyncStorage.getItem('userProfile');
+      if (data !== null) {
+        setData(JSON.parse(data));
+      } else {
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <>
@@ -150,7 +162,6 @@ const EditProfileHealth = ({ navigation }) => {
           </InnerContainer>
         </StyledContainer>
       </KeyboardAvoidingWrapper>
-      {loginPending ? <AppLoader /> : null}
     </>
   );
 };

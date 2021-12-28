@@ -1,4 +1,5 @@
 import API from './api';
+import axios from 'axios';
 
 export const authenticationService = (values) => {
   const params = new URLSearchParams();
@@ -11,7 +12,13 @@ export const authenticationService = (values) => {
     },
   };
 
-  return API.post('/login', params, config).then((response) =>
-    response.status === 200 ? response : null
-  );
+  return API.post('/login', params, config)
+    .then((response) => (response.status === 200 ? response : null))
+    .catch((err) => console.log(err.message));
+};
+
+export const getUserProfileService = (icNo) => {
+  return API.get('/user/profile/own/donor/' + icNo)
+    .then((response) => (response.status === 200 ? response : null))
+    .catch((err) => console.log(err.message));
 };
