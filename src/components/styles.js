@@ -300,6 +300,15 @@ export const FormInputLabel = styled(StyledInputLabel)`
   left: 6px;
   padding: 5px;
   z-index: 1;
+
+  ${(props) =>
+    props.positionRelative &&
+    `
+    position: relative;
+    top: 0;
+    left: 0;
+    padding-left: 6px;
+  `}
 `;
 
 export const LeftIcon = styled.View`
@@ -512,6 +521,12 @@ export const BadgeFrame = styled.View`
   align-self: center;
   justify-content: center;
   align-items: center;
+
+  ${(props) =>
+    props.secondary &&
+    `
+    background-color: ${secondary};
+  `}
 `;
 
 export const BadgeTitle = styled.Text`
@@ -550,6 +565,12 @@ export const CardPanel = styled.View`
     props.marginBottom17 &&
     `
     margin-bottom: 17px;
+  `}
+
+  ${(props) =>
+    props.height800 &&
+    `
+    height: 800px;
   `}
 `;
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
@@ -33,43 +33,61 @@ import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
 import { Picker } from '@react-native-picker/picker';
 
-import { States } from './../components/utils';
+import { States, Genders } from './../components/utils';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { updateUserProfileService } from './../components/services/user-service';
 
 // colors
-const { theme, darkLight, primary } = Colors;
-
-const profileData = {
-  donorId: 'D0001',
-  fName: 'Yap',
-  lName: 'Chee',
-  gender: 'F',
-  dob: '12-03-1999',
-  addressFLine: '',
-  addressSLine: '',
-  city: '',
-  state: '',
-  zipCode: '',
-  imgLoc: '',
-  bloodType: 'O+',
-  weight: '',
-  height: '',
-  medicalHistory: {},
-  contactNo: '019122338383',
-  email: 'cheeling1203@gmail.com',
-};
+const { theme, darkLight, primary, secondary } = Colors;
 
 const validationSchema = Yup.object({
-  dob: Yup.string().trim().required('Required!'),
-  //address: Yup.string().trim().required('Required!'),
-  //contactNo: Yup.number()
-  //.integer()
-  //.typeError('Enter numeric characters only')
-  //.required('Contact no. is required!'),
-  //email: Yup.string().email('Invalid email').required('Email is required!'),
+  dob: Yup.string().required('Required!'),
+  gender: Yup.string().trim().required('Required!'),
+  addressFLine: Yup.string().trim().required('Required!'),
+  addressSLine: Yup.string().trim().required('Required!'),
+  city: Yup.string().trim().required('Required!'),
+  state: Yup.string().trim().required('Required!'),
+  postcode: Yup.string().trim().required('Required!'),
+  contactNo: Yup.number()
+    .integer()
+    .typeError('Enter numeric characters only')
+    .required('Contact no. is required!'),
+  email: Yup.string().email('Invalid email').required('Email is required!'),
 });
 
 const EditProfileGeneral = ({ navigation }) => {
   const [loginPending, setLoginPending] = useState(false);
+  const [profileData, setProfileData] = useState({});
+
+  useEffect(() => {
+    getExistingData();
+    return () => {
+      setProfileData({});
+    };
+  }, []);
+
+  const getExistingData = async () => {
+    try {
+      const userProfile = JSON.parse(await AsyncStorage.getItem('userProfile'));
+      userProfile ? setProfileData(userProfile) : null;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const onSubmit = (values) => {
+    updateUserProfileService(values)
+      .then(async (res) => {
+        if (res !== undefined && res !== null) {
+          await AsyncStorage.setItem('userProfile', JSON.stringify(values));
+        } else {
+          console.log('error');
+        }
+      })
+      .catch((error) => console.log(error.message));
+  };
 
   return (
     <>
@@ -78,16 +96,10 @@ const EditProfileGeneral = ({ navigation }) => {
           <StatusBar style='auto' />
           <InnerContainer alignItemsCenter paddingTop30>
             <Formik
+              enableReinitialize={true}
               initialValues={profileData}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log(values);
-                dispatch(setGender(values.gender));
-                dispatch(setDOB(values.dob));
-                setTimeout(() => {
-                  console.log(values);
-                }, 3000);
-              }}
+              onSubmit={onSubmit}
             >
               {({
                 handleChange,
@@ -131,13 +143,15 @@ const EditProfileGeneral = ({ navigation }) => {
                       defaultValue={profileData.dob}
                       onChangeText={handleChange('dob')}
                       onBlur={handleBlur('dob')}
+                      placeholder='DD-MM-YYYY'
                     />
-                    <GenderDropDown
+                    <Dropdown
                       label='Gender'
                       defaultValue={profileData.gender}
                       onChangeText={handleChange('gender')}
                       onBlur={handleBlur('gender')}
                       setFieldValue={setFieldValue}
+                      field='gender'
                     />
                   </FlexRowContainer>
                   <TextInput
@@ -170,21 +184,23 @@ const EditProfileGeneral = ({ navigation }) => {
                     value={values.city}
                   />
                   <FlexRowContainer>
-                    <StateDropDown
+                    <Dropdown
                       label='State'
                       defaultValue={profileData.state}
+                      error={touched.state && errors.state}
                       onChangeText={handleChange('state')}
                       onBlur={handleBlur('state')}
                       setFieldValue={setFieldValue}
+                      field='state'
                     />
                     <TextInput
-                      label='Zip Code'
-                      defaultValue={profileData.zipCode}
-                      error={touched.zipCode && errors.zipCode}
+                      label='Postcode'
+                      defaultValue={profileData.postcode}
+                      error={touched.postcode && errors.postcode}
                       placeholder='56000'
-                      onChangeText={handleChange('zipCode')}
-                      onBlur={handleBlur('zipCode')}
-                      value={values.zipCode}
+                      onChangeText={handleChange('postcode')}
+                      onBlur={handleBlur('postcode')}
+                      value={values.postcode}
                     />
                   </FlexRowContainer>
                   <TextInput
@@ -209,7 +225,7 @@ const EditProfileGeneral = ({ navigation }) => {
                       lightButton
                       onPress={() => navigation.goBack()}
                     >
-                      <ButtonText tertiaryText>Cancel</ButtonText>
+                      <ButtonText tertiaryText>Back</ButtonText>
                     </StyledButton>
                     <StyledButton margin5 onPress={handleSubmit}>
                       <ButtonText>Save</ButtonText>
@@ -235,11 +251,6 @@ const TextInput = ({ label, error, readOnly, isDate, ...props }) => {
         ) : (
           <FormTextInput readOnly={readOnly} {...props} />
         )}
-        {isDate && (
-          <RightIcon formButton>
-            <Fontisto name='date' size={24} color={darkLight} />
-          </RightIcon>
-        )}
         {error ? (
           <ErrorMsgContainer paddingLeft5>
             <StyledIcon>
@@ -253,43 +264,7 @@ const TextInput = ({ label, error, readOnly, isDate, ...props }) => {
   );
 };
 
-const GenderDropDown = ({ label, setFieldValue, ...props }) => {
-  const [selectedValue, setSelectedValue] = useState();
-  return (
-    <View>
-      <FormInputContainer>
-        <FormInputLabel>{label}</FormInputLabel>
-        <FormTextInput
-          value={selectedValue == 'M' ? 'Male' : 'Female'}
-          editable={false}
-          style={{ paddingRight: 40 }}
-          {...props}
-        />
-        <Picker
-          selectedValue={selectedValue}
-          style={{
-            height: 50,
-            width: 50,
-            position: 'absolute',
-            top: 8,
-            right: 0,
-          }}
-          mode='dropdown'
-          dropdownIconColor={theme}
-          onValueChange={(itemValue, itemIndex) => {
-            setFieldValue('gender', itemValue);
-            setSelectedValue(itemValue);
-          }}
-        >
-          <Picker.Item label='Female' value='F' />
-          <Picker.Item label='Male' value='M' />
-        </Picker>
-      </FormInputContainer>
-    </View>
-  );
-};
-
-const StateDropDown = ({ label, setFieldValue, ...props }) => {
+const Dropdown = ({ label, setFieldValue, field, ...props }) => {
   const [selectedValue, setSelectedValue] = useState();
   return (
     <View>
@@ -312,13 +287,24 @@ const StateDropDown = ({ label, setFieldValue, ...props }) => {
           }}
           dropdownIconColor={theme}
           onValueChange={(itemValue, itemIndex) => {
-            setFieldValue('state', itemValue);
+            setFieldValue(field, itemValue);
             setSelectedValue(itemValue);
           }}
         >
-          {States.map((state) => {
-            return <Picker.Item key={state} label={state} value={state} />;
-          })}
+          {field == 'state' &&
+            States.map((state) => {
+              return <Picker.Item key={state} label={state} value={state} />;
+            })}
+          {field == 'gender' &&
+            Genders.map((gender) => {
+              return (
+                <Picker.Item
+                  key={gender.key}
+                  label={gender.value}
+                  value={gender.key}
+                />
+              );
+            })}
         </Picker>
       </FormInputContainer>
     </View>

@@ -3,6 +3,7 @@ import {
   authenticationService,
   getUserProfileService,
 } from '../components/services/user-service';
+import { getDonationHistory } from '../components/services/donation-service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UserInfoContext = createContext();
@@ -55,18 +56,8 @@ const UserInfoProvider = ({ children }) => {
         if (data !== undefined && data !== null) {
           const tokens = data.data;
           await AsyncStorage.setItem('authTokens', JSON.stringify(tokens));
-          getUserProfileService(values.icNo)
-            .then(async (res) => {
-              if (res !== undefined && res !== null) {
-                const profile = res.data;
-                await AsyncStorage.setItem(
-                  'userProfile',
-                  JSON.stringify(profile)
-                );
-                setIsLoggedIn(true);
-              }
-            })
-            .catch((error) => console.log(error.message));
+          getProfile(values.icNo);
+          getHistories(userProfile.donorId);
           setErrorMessage(null);
         } else {
           setErrorMessage('Wrong email/password!');
@@ -77,12 +68,39 @@ const UserInfoProvider = ({ children }) => {
 
   let logoutUser = async () => {
     try {
-      await AsyncStorage.removeItem('authTokens');
-      await AsyncStorage.removeItem('userProfile');
+      await AsyncStorage.clear().then(console.log('clear'));
       setIsLoggedIn(false);
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  getProfile = (icNo) => {
+    getUserProfileService(icNo)
+      .then(async (res) => {
+        if (res !== undefined && res !== null) {
+          const profile = res.data;
+          await AsyncStorage.setItem('userProfile', JSON.stringify(profile));
+          setIsLoggedIn(true);
+        }
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  const getHistories = (userId) => {
+    getDonationHistory(userId)
+      .then(async (res) => {
+        if (res !== undefined && res !== null) {
+          const historyData = res.data;
+          await AsyncStorage.setItem(
+            'donationHistories',
+            JSON.stringify(historyData)
+          );
+        } else {
+          console.log('no data');
+        }
+      })
+      .catch((error) => console.log(error.message));
   };
 
   let contextData = {
@@ -91,6 +109,7 @@ const UserInfoProvider = ({ children }) => {
     isLoggedIn: isLoggedIn,
     errorMessage: errorMessage,
     userProfile: userProfile,
+    getHistories: getHistories,
   };
 
   return (

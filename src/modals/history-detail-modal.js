@@ -33,24 +33,27 @@ const HistoryDetailModal = ({ isOpen, onClose, details }) => {
             Date
           </DarkLightStyledText>
           <StyledText marginBottom17>
-            {moment(details.date, 'DD-MM-YYYY').format('D MMMM YYYY')}
+            {moment(details.date, 'YYYY-MM-DD').format('D MMMM YYYY')}
           </StyledText>
           <DarkLightStyledText fontWeightBold fontSize15>
             Time
           </DarkLightStyledText>
           <StyledText marginBottom17>
-            {moment(details.time, 'HHmm').format('LT')}
+            {moment(details.time, 'hh:mm:ss').format('LT')}
           </StyledText>
           <DarkLightStyledText fontWeightBold fontSize15>
             Blood Centre (ID)
           </DarkLightStyledText>
           <StyledText marginBottom17>
-            {details.centerName} ({details.centerID})
+            {details.staff && details.staff.bloodCentre.bloodCentreName} (
+            {details.staff && details.staff.bloodCentre.bloodCentreId})
           </StyledText>
           <DarkLightStyledText fontWeightBold fontSize15>
             Blood Group
           </DarkLightStyledText>
-          <StyledText marginBottom17>{details.bloodGroup}</StyledText>
+          <StyledText marginBottom17>
+            {details.donor && details.donor.bloodType}
+          </StyledText>
           <DarkLightStyledText fontWeightBold fontSize15>
             Blood Unit Collected ( /mL )
           </DarkLightStyledText>
@@ -59,7 +62,9 @@ const HistoryDetailModal = ({ isOpen, onClose, details }) => {
             Collected by
           </DarkLightStyledText>
           <StyledText marginBottom17>
-            {details.staffName} ({details.staffUUID})
+            {details.staff && details.staff.fName}{' '}
+            {details.staff && details.staff.lName} (
+            {details.staff && details.staff.staffId})
           </StyledText>
         </CardItem>
         <Line />
@@ -78,7 +83,7 @@ const HistoryDetailModal = ({ isOpen, onClose, details }) => {
               Haemoglobin
             </DarkLightStyledText>
             <ThemeStyledText fontWeightBold fontSize15>
-              {details.heamoglobinCount}gm/dL
+              {details.haemoglobinCount}gm/dL
             </ThemeStyledText>
           </CardItem>
           <CardItem detail>
