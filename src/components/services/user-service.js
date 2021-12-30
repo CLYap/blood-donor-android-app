@@ -22,3 +22,9 @@ export const getUserProfileService = (icNo) => {
     .then((response) => (response.status === 200 ? response : null))
     .catch((err) => console.log(err.message));
 };
+
+export const updateUserProfileService = async (data) => {
+  return await API.put('/update/profile/donor', data)
+    .then((response) => (response.status === 200 ? response : null))
+    .catch((err) => console.log(err.message));
+};

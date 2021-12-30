@@ -21,6 +21,11 @@ export const States = [
   'Wp Putrajaya',
 ];
 
+export const Genders = [
+  { key: 'F', value: 'Female' },
+  { key: 'M', value: 'Male' },
+];
+
 export const HeaderScreenOptions = {
   headerStyle: {
     backgroundColor: theme,

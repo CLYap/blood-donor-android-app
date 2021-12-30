@@ -8,6 +8,13 @@ const API = axios.create({
   },
 });
 
+const RefreshAPI = axios.create({
+  baseURL: 'http://192.168.0.106:8080/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 API.interceptors.request.use(
   async (config) => {
     const tokens = await AsyncStorage.getItem('authTokens');
@@ -41,14 +48,18 @@ API.interceptors.response.use(
         headers: {
           Authorization: header,
         },
-      }).then(async (response) => {
-        if (response !== undefined && response !== null) {
-          await AsyncStorage.setItem(
-            'authTokens',
-            JSON.stringify(response.data)
-          );
-        }
-      });
+      })
+        .then(async (response) => {
+          if (response !== undefined && response !== null) {
+            await AsyncStorage.setItem(
+              'authTokens',
+              JSON.stringify(response.data)
+            );
+          }
+        })
+        .catch(async () => {
+          await AsyncStorage.clear();
+        });
     }
     return Promise.reject(error);
   }

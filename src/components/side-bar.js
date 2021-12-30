@@ -38,7 +38,7 @@ function SideBar(props) {
           marginBottom5
           textAlignCenter
         >
-          {userProfile.fName} {userProfile.lName}
+          {userProfile.fName} {userProfile.lName} ({userProfile.donorId})
         </StyledText>
         <DarkLightStyledText alignSelfCenter marginBottom5>
           {userProfile.icNo}

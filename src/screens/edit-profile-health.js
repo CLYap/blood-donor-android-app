@@ -30,51 +30,56 @@ import {
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
+import { updateUserProfileService } from './../components/services/user-service';
+
 // colors
 const { theme, darkLight, primary } = Colors;
 
-const profileData = {
-  donorId: 'D0001',
-  fName: 'Yap',
-  lName: 'Chee',
-  gender: 'F',
-  dob: '12-03-1999',
-  addressFLine: '',
-  addressSLine: '',
-  city: '',
-  state: '',
-  zipCode: '',
-  bloodType: 'O+',
-  weight: '',
-  height: '',
-  medicalHistory: ['diabetes', 'asthma'],
-  allergies: [],
-  contactNo: '019122338383',
-  email: 'cheeling1203@gmail.com',
-};
-
 const validationSchema = Yup.object({
-  weight: Yup.number().integer().typeError('Enter numeric characters only'),
-  height: Yup.number().integer().typeError('Enter numeric characters only'),
+  weight: Yup.number()
+    .integer()
+    .typeError('Enter numeric characters only')
+    .required('Required!'),
+  height: Yup.number()
+    .integer()
+    .typeError('Enter numeric characters only')
+    .required('Required!'),
 });
 
 const EditProfileHealth = ({ navigation }) => {
   const [loginPending, setLoginPending] = useState(false);
+  const [profileData, setProfileData] = useState({});
 
   useEffect(() => {
-    retrieveData();
-  });
+    getExistingData();
+    return () => {
+      setProfileData({});
+    };
+  }, []);
 
-  const retrieveData = async () => {
+  const getExistingData = async () => {
     try {
-      const data = await AsyncStorage.getItem('userProfile');
-      if (data !== null) {
-        setData(JSON.parse(data));
-      } else {
+      const userProfile = JSON.parse(await AsyncStorage.getItem('userProfile'));
+      if (userProfile) {
+        userProfile.weight = String(userProfile.weight); //parse int to string for input field as text input does not accept number
+        userProfile.height = String(userProfile.height); //parse int to string for input field as text input does not accept number
+        setProfileData(userProfile);
       }
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const onSubmit = (values) => {
+    updateUserProfileService(values)
+      .then(async (res) => {
+        if (res !== undefined && res !== null) {
+          await AsyncStorage.setItem('userProfile', JSON.stringify(values));
+        } else {
+          console.log('error');
+        }
+      })
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -84,16 +89,10 @@ const EditProfileHealth = ({ navigation }) => {
           <StatusBar style='auto' />
           <InnerContainer alignItemsCenter paddingTop30>
             <Formik
+              enableReinitialize={true}
               initialValues={profileData}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log(values);
-                setLoginPending(true);
-                setTimeout(() => {
-                  console.log(values);
-                  setLoginPending(false);
-                }, 3000);
-              }}
+              onSubmit={onSubmit}
             >
               {({
                 handleChange,
@@ -130,27 +129,28 @@ const EditProfileHealth = ({ navigation }) => {
                       value={values.height}
                     />
                   </FlexRowContainer>
-                  <Line />
-                  <MultipleTextInput
-                    label='Medical History?'
-                    existingList={profileData.medicalHistory}
-                    setFieldValue={setFieldValue}
-                    placeholder='Add your medical history here...'
+                  <TextInput
+                    label='Medical History'
+                    defaultValue={profileData.medicalHistory}
+                    onChangeText={handleChange('medicalHistory')}
+                    onBlur={handleBlur('medicalHistory')}
+                    value={values.medicalHistory}
                   />
-                  <Line />
-                  <MultipleTextInput
-                    label='Allergies History?'
-                    existingList={profileData.allergies}
-                    setFieldValue={setFieldValue}
-                    placeholder='Add your allegies here...'
+                  <TextInput
+                    label='Allergy'
+                    defaultValue={profileData.allergy}
+                    onChangeText={handleChange('allergy')}
+                    onBlur={handleBlur('allergy')}
+                    value={values.allergy}
                   />
+
                   <FlexRowContainer justifyFlexEnd paddingVertical20>
                     <StyledButton
                       margin5
                       lightButton
                       onPress={() => navigation.goBack()}
                     >
-                      <ButtonText tertiaryText>Cancel</ButtonText>
+                      <ButtonText tertiaryText>Back</ButtonText>
                     </StyledButton>
                     <StyledButton margin5 onPress={handleSubmit}>
                       <ButtonText>Save</ButtonText>
@@ -183,62 +183,6 @@ const TextInput = ({ label, error, readOnly, ...props }) => {
             </StyledIcon>
             <ErrorMsg>{error}</ErrorMsg>
           </ErrorMsgContainer>
-        ) : null}
-      </FormInputContainer>
-    </View>
-  );
-};
-
-const MultipleTextInput = ({
-  label,
-  existingList,
-  setFieldValue,
-  readOnly,
-  ...props
-}) => {
-  const [inputField, toggleInputField] = useState(false);
-  const [item, setItem] = useState();
-  const [itemList, setItemList] = useState(existingList);
-
-  useEffect(() => {
-    label == 'Medical History?'
-      ? setFieldValue('medicalHistory', itemList)
-      : setFieldValue('allergies', itemList);
-  }, [itemList]);
-
-  const addItem = () => {
-    if (item) {
-      setItemList([...itemList, item]);
-      setItem(null);
-    }
-  };
-
-  return (
-    <View>
-      <FormInputContainer>
-        <CardItem detailBox>
-          {itemList.length > 0 ? (
-            itemList.map((item, index) => (
-              <StyledText key={index}>- {item}</StyledText>
-            ))
-          ) : (
-            <StyledText>No record!</StyledText>
-          )}
-          <RightIcon top onPress={() => toggleInputField(!inputField)}>
-            <FontAwesome5 name='pencil-alt' size={15} color={theme} />
-          </RightIcon>
-        </CardItem>
-        <FormInputLabel>{label}</FormInputLabel>
-        {inputField ? (
-          <View style={{ position: 'relative' }}>
-            <FormTextInput
-              value={item}
-              onChangeText={(item) => setItem(item)}
-            />
-            <RightIcon formButton onPress={() => addItem()}>
-              <Ionicons name='md-add-circle' size={24} color={theme} />
-            </RightIcon>
-          </View>
         ) : null}
       </FormInputContainer>
     </View>
