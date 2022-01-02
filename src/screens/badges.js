@@ -95,7 +95,7 @@ const Badges = () => {
             ) : (
               <EmptyBox />
             )}
-            {donationFrequency >= 20 ? (
+            {donationFrequency >= 45 ? (
               <BadgeContainer>
                 <BadgeFrame>
                   <MaterialCommunityIcons
