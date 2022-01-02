@@ -11,7 +11,7 @@ import {
   DarkLightStyledText,
   ThemeStyledText,
   Line,
-} from './../components/styles';
+} from './../styles';
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 

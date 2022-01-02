@@ -1,25 +1,25 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Appointment from '../../screens/appointment';
-import { Colors, StyledIcon } from '../../components/styles';
+import Home from '../../../screens/home';
+import { Colors, StyledIcon } from '../../styles';
 import { Feather } from '@expo/vector-icons';
-import { HeaderScreenOptions } from '../../components/utils';
+import { HeaderScreenOptions } from '../../utils';
 
 const { primary, theme } = Colors;
 
 const Stack = createNativeStackNavigator();
 
-const AppointmentStack = ({ navigation }) => {
+const HomeStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       screenOptions={HeaderScreenOptions}
-      initialRouteName='AppointmentScreen'
+      initialRouteName='HomeScreen'
     >
       <Stack.Screen
-        name='AppointmentScreen'
-        component={Appointment}
+        name='HomeScreen'
+        component={Home}
         options={({ navigation }) => ({
-          title: 'Appointment',
+          title: 'Home',
           headerLeft: () => (
             <StyledIcon menu>
               <Feather
@@ -36,4 +36,4 @@ const AppointmentStack = ({ navigation }) => {
   );
 };
 
-export default AppointmentStack;
+export default HomeStack;

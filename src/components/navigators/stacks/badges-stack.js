@@ -1,25 +1,25 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../../screens/home';
-import { Colors, StyledIcon } from '../../components/styles';
+import Badges from '../../../screens/badges';
+import { Colors, StyledIcon } from '../../styles';
 import { Feather } from '@expo/vector-icons';
-import { HeaderScreenOptions } from '../../components/utils';
+import { HeaderScreenOptions } from '../../utils';
 
 const { primary, theme } = Colors;
 
 const Stack = createNativeStackNavigator();
 
-const HomeStack = ({ navigation }) => {
+const BadgesStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       screenOptions={HeaderScreenOptions}
-      initialRouteName='HomeScreen'
+      initialRouteName='BadgesScreen'
     >
       <Stack.Screen
-        name='HomeScreen'
-        component={Home}
+        name='BadgesScreen'
+        component={Badges}
         options={({ navigation }) => ({
-          title: 'Home',
+          title: 'Badges',
           headerLeft: () => (
             <StyledIcon menu>
               <Feather
@@ -36,4 +36,4 @@ const HomeStack = ({ navigation }) => {
   );
 };
 
-export default HomeStack;
+export default BadgesStack;

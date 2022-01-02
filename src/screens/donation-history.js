@@ -15,10 +15,10 @@ import {
   StyledText,
   ImageIconContainer,
 } from './../components/styles';
-import HistoryDetailModal from './../modals/history-detail-modal';
+import HistoryDetailModal from './../components/modals/history-detail-modal';
 import { AntDesign, Octicons, MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useUserInfo } from './../context/user-info-provider';
+import { useUserInfo } from './../components/context/user-info-provider';
 
 const { theme } = Colors;
 
@@ -37,13 +37,7 @@ const DonationHistory = () => {
   };
 
   useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      getHistoryData();
-    }
-    return () => {
-      isMounted = false;
-    };
+    getHistoryData();
   }, [histories]);
 
   const getHistoryData = async () => {

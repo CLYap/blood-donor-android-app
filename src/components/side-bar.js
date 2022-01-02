@@ -5,8 +5,8 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { useUserInfo } from './../context/user-info-provider';
-import LogoutModal from './../modals/logout-modal';
+import { useUserInfo } from './context/user-info-provider';
+import LogoutModal from './modals/logout-modal';
 import { Entypo } from '@expo/vector-icons';
 import {
   StyledImage,
@@ -15,7 +15,7 @@ import {
   ThemeStyledText,
   StyledIcon,
   Colors,
-} from './../components/styles';
+} from './styles';
 
 const { theme, tertiary } = Colors;
 

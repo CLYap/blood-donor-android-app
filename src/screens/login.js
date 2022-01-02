@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 //login context
-import { useUserInfo } from './../context/user-info-provider';
+import { useUserInfo } from './../components/context/user-info-provider';
 
 // icons
 import { MaterialIcons, Ionicons, Fontisto } from '@expo/vector-icons';
@@ -33,7 +33,7 @@ import {
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/keyboard-avoiding-wrapper';
 
-import MessageModal from './../modals/message-modal';
+import MessageModal from './../components/modals/message-modal';
 
 // colors
 const { theme, darkLight, primary } = Colors;
@@ -56,6 +56,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     errorMessage !== null ? setModalVisible(true) : setModalVisible(false);
+    return () => setModalVisible(false);
   }, [errorMessage]);
 
   const onSubmit = (values, { resetForm }) => {

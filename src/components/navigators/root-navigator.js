@@ -1,8 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from './../screens/login';
-import ResetPassword from './../screens/reset-password';
-import { Colors } from './../components/styles';
+import Login from '../../screens/login';
+import ResetPassword from '../../screens/reset-password';
+import { Colors } from '../styles';
 
 const { tertiary } = Colors;
 

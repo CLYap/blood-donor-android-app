@@ -30,7 +30,7 @@ if (firebase.apps.length === 0) {
 }
 
 const db = firebase.firestore();
-const chatsRef = db.collection('chats');
+const chatsRef = db.collection('messages').doc('S0001D0003').collection('chat');
 
 const Chat = () => {
   const [user, setUser] = useState(null);
@@ -70,7 +70,7 @@ const Chat = () => {
 
   async function handlePress() {
     const _id = Math.random();
-    const user = { _id, name };
+    const user = { _id: 'D0003', name: 'CL' };
     await AsyncStorage.setItem('user', JSON.stringify(user));
     setUser(user);
   }
