@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-native-modal';
+import { StatusBar } from 'expo-status-bar';
 import {
   ModalContainer,
+  PageTitle,
   StyledText,
   FlexRowContainer,
   StyledButton,
   ButtonText,
-} from './../components/styles';
+} from './../styles';
 
-const MessageModal = ({ isOpen, onClose, errorMessage }) => {
+const LogoutModal = ({ isOpen, onClose, logoutUser }) => {
   return (
     <Modal isVisible={isOpen} coverScreen={true} swipeDirection='right'>
       <ModalContainer>
+        <PageTitle>Sign Out?</PageTitle>
         <StyledText paddingLeft10 fontSize15 fontWeightBold marginBottom17>
-          {errorMessage}
+          Are you sure to sign out?
         </StyledText>
         <FlexRowContainer>
           <StyledButton margin5 onPress={onClose}>
-            <ButtonText>Back</ButtonText>
+            <ButtonText>Cancel</ButtonText>
+          </StyledButton>
+          <StyledButton margin5 onPress={logoutUser}>
+            <ButtonText>Sign Out</ButtonText>
           </StyledButton>
         </FlexRowContainer>
       </ModalContainer>
@@ -25,4 +31,4 @@ const MessageModal = ({ isOpen, onClose, errorMessage }) => {
   );
 };
 
-export default MessageModal;
+export default LogoutModal;

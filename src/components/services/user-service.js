@@ -18,7 +18,7 @@ export const authenticationService = (values) => {
 };
 
 export const getUserProfileService = (icNo) => {
-  return API.get('/user/profile/own/donor/' + icNo)
+  return API.get('/user/profile/donor/' + icNo)
     .then((response) => (response.status === 200 ? response : null))
     .catch((err) => console.log(err.message));
 };

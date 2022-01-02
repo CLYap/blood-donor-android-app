@@ -5,8 +5,8 @@ import ProfileStack from './stacks/profile-stack';
 import AppointmentStack from './stacks/appointment-stack';
 import DonationHistoryStack from './stacks/donation-history-stack';
 import BadgesStack from './stacks/badges-stack';
-import SideBar from './../components/side-bar';
-import Chat from './../screens/chat';
+import SideBar from '../side-bar';
+import Chat from '../../screens/chat';
 import {
   FontAwesome5,
   MaterialIcons,
@@ -14,7 +14,7 @@ import {
   FontAwesome,
   Entypo,
 } from '@expo/vector-icons';
-import { Colors } from './../components/styles';
+import { Colors } from './../styles';
 
 const { theme, primary, tertiary, lightTheme } = Colors;
 

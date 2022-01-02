@@ -1,25 +1,25 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Badges from '../../screens/badges';
-import { Colors, StyledIcon } from '../../components/styles';
+import DonationHistory from '../../../screens/donation-history';
+import { Colors, StyledIcon } from '../../styles';
 import { Feather } from '@expo/vector-icons';
-import { HeaderScreenOptions } from '../../components/utils';
+import { HeaderScreenOptions } from '../../utils';
 
 const { primary, theme } = Colors;
 
 const Stack = createNativeStackNavigator();
 
-const BadgesStack = ({ navigation }) => {
+const DonationHistoryStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       screenOptions={HeaderScreenOptions}
-      initialRouteName='BadgesScreen'
+      initialRouteName='DonationHistoryScreen'
     >
       <Stack.Screen
-        name='BadgesScreen'
-        component={Badges}
+        name='DonationHistoryScreen'
+        component={DonationHistory}
         options={({ navigation }) => ({
-          title: 'Badges',
+          title: 'Donation History',
           headerLeft: () => (
             <StyledIcon menu>
               <Feather
@@ -36,4 +36,4 @@ const BadgesStack = ({ navigation }) => {
   );
 };
 
-export default BadgesStack;
+export default DonationHistoryStack;

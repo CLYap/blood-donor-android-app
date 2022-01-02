@@ -1,11 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Profile from '../../screens/profile';
-import { Colors, StyledIcon } from '../../components/styles';
+import Profile from '../../../screens/profile';
+import { Colors, StyledIcon } from '../../styles';
 import { Feather } from '@expo/vector-icons';
-import { HeaderScreenOptions } from '../../components/utils';
-import EditProfileHealth from '../../screens/edit-profile-health';
-import EditProfileGeneral from '../../screens/edit-profile-general';
+import { HeaderScreenOptions } from '../../utils';
+import EditProfileHealth from '../../../screens/edit-profile-health';
+import EditProfileGeneral from '../../../screens/edit-profile-general';
 
 const { primary, theme } = Colors;
 

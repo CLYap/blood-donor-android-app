@@ -15,7 +15,7 @@ import {
   StyledButton,
   ButtonText,
 } from './../components/styles';
-import { useUserInfo } from './../context/user-info-provider';
+import { useUserInfo } from './../components/context/user-info-provider';
 
 const { theme } = Colors;
 

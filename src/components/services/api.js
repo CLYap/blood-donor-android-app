@@ -2,14 +2,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API = axios.create({
-  baseURL: 'http://192.168.0.106:8080/api',
+  baseURL: 'http://192.168.0.112:8080/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 const RefreshAPI = axios.create({
-  baseURL: 'http://192.168.0.106:8080/api',
+  baseURL: 'http://192.168.0.112:8080/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -48,18 +48,14 @@ API.interceptors.response.use(
         headers: {
           Authorization: header,
         },
-      })
-        .then(async (response) => {
-          if (response !== undefined && response !== null) {
-            await AsyncStorage.setItem(
-              'authTokens',
-              JSON.stringify(response.data)
-            );
-          }
-        })
-        .catch(async () => {
-          await AsyncStorage.clear();
-        });
+      }).then(async (response) => {
+        if (response !== undefined && response !== null) {
+          await AsyncStorage.setItem(
+            'authTokens',
+            JSON.stringify(response.data)
+          );
+        }
+      });
     }
     return Promise.reject(error);
   }

@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
   authenticationService,
   getUserProfileService,
-} from '../components/services/user-service';
-import { getDonationHistory } from '../components/services/donation-service';
+} from '../services/user-service';
+import { getDonationHistory } from '../services/donation-service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UserInfoContext = createContext();
