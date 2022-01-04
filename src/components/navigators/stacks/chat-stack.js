@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Appointment from '../../../screens/appointment';
-import BloodCentreList from '../../../screens/blood-centre-list';
+import Chat from '../../../screens/chat';
+import MessageList from '../../../screens/message-list';
 import { Colors, StyledIcon } from '../../styles';
 import { Feather } from '@expo/vector-icons';
 import { HeaderScreenOptions } from '../../utils';
@@ -10,17 +10,17 @@ const { primary, theme } = Colors;
 
 const Stack = createNativeStackNavigator();
 
-const AppointmentStack = ({ navigation }) => {
+const ChatStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       screenOptions={HeaderScreenOptions}
-      initialRouteName='BloodCentreList'
+      initialRouteName='MessageList'
     >
       <Stack.Screen
-        name='BloodCentreList'
-        component={BloodCentreList}
+        name='MessageList'
+        component={MessageList}
         options={({ navigation }) => ({
-          title: 'Select Blood Centre',
+          title: 'Recent Chat',
           headerLeft: () => (
             <StyledIcon menu>
               <Feather
@@ -34,10 +34,10 @@ const AppointmentStack = ({ navigation }) => {
         })}
       ></Stack.Screen>
       <Stack.Screen
-        name='AppointmentScreen'
-        component={Appointment}
+        name='ChatScreen'
+        component={Chat}
         options={({ navigation }) => ({
-          title: 'Make Appointment',
+          title: 'Messages',
           headerLeft: () => (
             <StyledIcon menu>
               <Feather
@@ -54,4 +54,4 @@ const AppointmentStack = ({ navigation }) => {
   );
 };
 
-export default AppointmentStack;
+export default ChatStack;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { ScrollView } from 'react-native';
 import {
   StyledContainer,
   InnerContainer,
@@ -8,61 +8,80 @@ import {
   ButtonText,
   Colors,
   StyledText,
+  ThemeStyledText,
+  DarkLightStyledText,
 } from './../components/styles';
+import { getAppointmentSlotService } from './../components/services/appointment-service';
+import RequestAppointmentModal from './../components/modals/request-appointment-modal';
+import moment from 'moment';
+import { useUserInfo } from './../components/context/user-info-provider';
+import { requestAppointmentService } from './../components/services/appointment-service';
 
 const { theme } = Colors;
 
-const Appointment = function ({ navigation }) {
-  const today = new Date();
-  const maxDate = today.setMonth(today.getMonth() + 2);
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-  const [text, setText] = useState('Empty');
+const Appointment = function ({ route, navigation }) {
+  const { bloodCentreId } = route.params;
+  const [appointmentSessionLs, setAppointmentSessionLs] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [details, setDetails] = useState({});
+  const { userProfile } = useUserInfo();
+  const donorId = userProfile.donorId;
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
+  useEffect(() => {
+    const getAppointmentSession = (bloodCentreId) => {
+      getAppointmentSlotService(bloodCentreId).then((data) => {
+        const appointmentSessions = data.data;
+        setAppointmentSessionLs(appointmentSessions);
+      });
+    };
+    getAppointmentSession(bloodCentreId);
+  }, [bloodCentreId]);
 
-    let tempDate = new Date(currentDate);
-    let fDate =
-      tempDate.getDate() +
-      '/' +
-      (tempDate.getMonth() + 1) +
-      '/' +
-      tempDate.getFullYear();
-    setText(fDate);
-    console.log(fDate);
+  const makeRequest = (donorId, appointmentSessionId) => {
+    requestAppointmentService(donorId, appointmentSessionId);
   };
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
+
   return (
     <StyledContainer>
       <StatusBar barStyle='light-content' backgroundColor={theme} />
       <InnerContainer padding20>
-        <StyledText>{text}</StyledText>
-        <StyledButton margin5 onPress={() => showMode('date')}>
-          <ButtonText>Select Date</ButtonText>
-        </StyledButton>
-        <StyledButton margin5 onPress={() => navigation.navigate('Login')}>
-          <ButtonText>Back</ButtonText>
-        </StyledButton>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <StyledText fontSize17 fontWeightBold letterSpacing marginBottom17>
+            You may pick a session and come at any time withn the allocated time
+          </StyledText>
+          {appointmentSessionLs &&
+            appointmentSessionLs.map((data) => {
+              return (
+                <StyledButton
+                  lightButton
+                  marginBottom17
+                  key={data.appointmentSessionId}
+                  onPress={() => {
+                    setModalVisible(true);
+                    setDetails(data);
+                  }}
+                >
+                  <ThemeStyledText fontSize17 fontWeightBold>
+                    {moment(data.date, 'YYYY-MM-DD').format('D MMMM YYYY')}
+                  </ThemeStyledText>
+
+                  <DarkLightStyledText marginBottom5>
+                    {moment(data.startTime, 'hh:mm:ss').format('LT')} -{' '}
+                    {moment(data.endTime, 'hh:mm:ss').format('LT')}
+                  </DarkLightStyledText>
+                </StyledButton>
+              );
+            })}
+          <RequestAppointmentModal
+            isOpen={modalVisible}
+            onClose={() => setModalVisible(false)}
+            details={details}
+            makeRequest={() =>
+              makeRequest(donorId, details.appointmentSessionId)
+            }
+          />
+        </ScrollView>
       </InnerContainer>
-      {show && (
-        <DateTimePicker
-          testID='dateTimePicker'
-          value={date}
-          mode={mode}
-          display='default'
-          onChange={onChange}
-          initialValues={new Date()}
-          minimumDate={new Date()}
-          maximumDate={maxDate}
-        />
-      )}
     </StyledContainer>
   );
 };

@@ -28,3 +28,12 @@ export const updateUserProfileService = async (data) => {
     .then((response) => (response.status === 200 ? response : null))
     .catch((err) => console.log(err.message));
 };
+
+export const resetPasswordService = async (data) => {
+  const values = { username: '', password: '' };
+  values.username = data.icNo;
+  values.password = data.password;
+  return await API.put('/reset/password', values)
+    .then((response) => (response.status === 200 ? response : null))
+    .catch((err) => console.log(err.message));
+};

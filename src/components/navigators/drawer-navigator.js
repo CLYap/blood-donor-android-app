@@ -5,8 +5,9 @@ import ProfileStack from './stacks/profile-stack';
 import AppointmentStack from './stacks/appointment-stack';
 import DonationHistoryStack from './stacks/donation-history-stack';
 import BadgesStack from './stacks/badges-stack';
+import ChatStack from './stacks/chat-stack';
 import SideBar from '../side-bar';
-import Chat from '../../screens/chat';
+
 import {
   FontAwesome5,
   MaterialIcons,
@@ -84,7 +85,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name='Chat'
-        component={Chat}
+        component={ChatStack}
         options={{
           title: 'Live Chat',
           drawerIcon: ({ color }) => (

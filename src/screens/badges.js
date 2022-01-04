@@ -29,17 +29,20 @@ const Badges = () => {
   const [donationFrequency, setDonationFrequency] = useState(0);
 
   useEffect(() => {
+    const getDonationFrequency = async () => {
+      try {
+        const data = JSON.parse(
+          await AsyncStorage.getItem('donationHistories')
+        );
+        setDonationFrequency(data ? data.length : 0);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
     getDonationFrequency();
-  }, []);
 
-  const getDonationFrequency = async () => {
-    try {
-      const data = JSON.parse(await AsyncStorage.getItem('donationHistories'));
-      setDonationFrequency(data ? data.length : 0);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    return () => getDonationFrequency();
+  }, []);
 
   return (
     <StyledContainer>

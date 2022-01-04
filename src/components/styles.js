@@ -184,6 +184,12 @@ export const StyledText = styled.Text`
     top: 60px;
     left: 42px;   
   `}
+
+  ${(props) =>
+    props.paddingLeft50 &&
+    `
+    padding-left: 50px;
+  `}
 `;
 
 export const ThemeStyledText = styled(StyledText)`
@@ -378,6 +384,14 @@ export const StyledButton = styled.TouchableOpacity`
     props.lightButton &&
     `
     background-color: ${secondary}; 
+  `}
+
+  ${(props) =>
+    props.primaryButton &&
+    `
+    background-color: ${primary}; 
+    border-color: ${theme};
+    border-width: 1px;
   `}
 
   ${(props) =>

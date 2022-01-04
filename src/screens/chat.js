@@ -2,11 +2,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text } from 'react-native';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GiftedChat } from 'react-native-gifted-chat';
-
+import { useUserInfo } from './../components/context/user-info-provider';
+import { db } from '../components/services/firebase-config';
 import {
   StyledContainer,
   InnerContainer,
@@ -16,30 +15,25 @@ import {
   StyledInputLabel,
 } from './../components/styles';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyCjACeWmg6XEyFcKpuil4dZSvsH_J5A3nE',
-  authDomain: 'blood-donor-management-s-f0d3c.firebaseapp.com',
-  projectId: 'blood-donor-management-s-f0d3c',
-  storageBucket: 'blood-donor-management-s-f0d3c.appspot.com',
-  messagingSenderId: '222959529237',
-  appId: '1:222959529237:web:3b3377c0d3e1a1c4c78d1c',
-};
-
-if (firebase.apps.length === 0) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-const db = firebase.firestore();
-const chatsRef = db.collection('messages').doc('S0001D0003').collection('chat');
-
-const Chat = () => {
+const Chat = ({ route, navigation }) => {
   const [user, setUser] = useState(null);
-  const [name, setName] = useState('');
   const [messages, setMessages] = useState([]);
+  const { userProfile } = useUserInfo();
+  const donorId = userProfile.donorId;
+  const donorName = userProfile.fName + ' ' + userProfile.lName;
+  const { senderId } = route.params;
+
+  const chatsRef = db
+    .collection('messages')
+    .doc(senderId + donorId)
+    .collection('chat');
 
   useEffect(() => {
-    AsyncStorage.removeItem('user');
-    readUser();
+    setUser({
+      _id: donorId,
+      name: donorName,
+    });
+
     const unsubscribe = chatsRef.onSnapshot((querySnapshot) => {
       const messageFirestore = querySnapshot
         .docChanges()
@@ -61,43 +55,9 @@ const Chat = () => {
     [messages]
   );
 
-  async function readUser() {
-    const user = await AsyncStorage.getItem('user');
-    if (user) {
-      setUser(JSON.parse(user));
-    }
-  }
-
-  async function handlePress() {
-    const _id = Math.random();
-    const user = { _id: 'D0003', name: 'CL' };
-    await AsyncStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
-  }
-
   async function handleSend(messages) {
     const writes = messages.map((m) => chatsRef.add(m));
     await Promise.all(writes);
-  }
-
-  if (!user) {
-    return (
-      <StyledContainer>
-        <InnerContainer>
-          <StyledText letterSpacing fontWeightBold fontSize17 paddingLeft20>
-            Chat no user
-          </StyledText>
-          <StyledTextInput
-            placeholder='Enter name'
-            value={name}
-            onChangeText={setName}
-          />
-          <StyledButton onPress={handlePress}>
-            <StyledInputLabel>Enter chat </StyledInputLabel>
-          </StyledButton>
-        </InnerContainer>
-      </StyledContainer>
-    );
   }
 
   return <GiftedChat messages={messages} user={user} onSend={handleSend} />;

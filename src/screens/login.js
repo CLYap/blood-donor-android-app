@@ -41,10 +41,11 @@ const { theme, darkLight, primary } = Colors;
 const userCredential = { icNo: '', password: '' };
 
 const validationSchema = Yup.object({
-  icNo: Yup.number()
-    .integer()
-    .typeError('Enter numeric characters only')
-    .required('IC no. is required!'),
+  icNo: Yup.string()
+    .required()
+    .matches(/^[0-9]+$/, 'Must be only digits')
+    .min(12, 'Must be exactly 12 digits')
+    .max(12, 'Must be exactly 12 digits'),
   password: Yup.string().trim().required('Password is required!'),
 });
 
@@ -125,7 +126,7 @@ const Login = ({ navigation }) => {
                   <TextLink
                     onPress={() => navigation.navigate('ResetPassword')}
                   >
-                    <TextLinkContent>Forgot password? </TextLinkContent>
+                    <TextLinkContent>Reset Your Password </TextLinkContent>
                   </TextLink>
                 </StyledFormArea>
               )}
@@ -184,4 +185,5 @@ const TextInput = ({
     </View>
   );
 };
+
 export default Login;
