@@ -76,9 +76,10 @@ const Appointment = function ({ route, navigation }) {
             isOpen={modalVisible}
             onClose={() => setModalVisible(false)}
             details={details}
-            makeRequest={() =>
-              makeRequest(donorId, details.appointmentSessionId)
-            }
+            makeRequest={() => {
+              makeRequest(donorId, details.appointmentSessionId);
+              setModalVisible(false);
+            }}
           />
         </ScrollView>
       </InnerContainer>

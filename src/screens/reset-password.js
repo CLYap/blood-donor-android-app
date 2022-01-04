@@ -108,7 +108,7 @@ const ResetPassword = () => {
                     setHidePassword={setHidePassword}
                   />
                   <TextInput
-                    label='Password'
+                    label='Confirm Password'
                     error={touched.confirmPassword && errors.confirmPassword}
                     icon='lock'
                     placeholder='* * * * * * * * *'

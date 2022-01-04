@@ -47,11 +47,6 @@ const Home = ({ navigation }) => {
         .catch((e) => console.log(e.message));
     };
     getDonationHistory(donorId);
-
-    return () => {
-      getAppointment(donorId);
-      getDonationHistory(donorId);
-    };
   }, [donorId]);
 
   return (
@@ -87,8 +82,9 @@ const Home = ({ navigation }) => {
             <CardItem header>
               <StyledText fontSize15 marginBottom17>
                 Date:{' '}
-                {appointment &&
-                  moment(appointment.date, 'YYYY-MM-DD').format('D MMMM YYYY')}
+                {appointment
+                  ? moment(appointment.date, 'YYYY-MM-DD').format('D MMMM YYYY')
+                  : '-'}
               </StyledText>
               <StyledText fontSize15 marginBottom17>
                 Time:{' '}
@@ -99,9 +95,12 @@ const Home = ({ navigation }) => {
                   moment(appointment.endTime, 'hh:mm:ss').format('LT')}
               </StyledText>
               <StyledText fontSize15 marginBottom17>
-                Blood Centre:{' '}
-                {appointment && appointment.bloodCentre.bloodCentreName} (
-                {appointment && appointment.bloodCentre.bloodCentreId})
+                Blood Centre:
+                {appointment
+                  ? appointment.bloodCentre.bloodCentreName +
+                    ' ' +
+                    appointment.bloodCentre.bloodCentreId
+                  : '-'}
               </StyledText>
             </CardItem>
           </CardPanel>
