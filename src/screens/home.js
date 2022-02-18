@@ -95,7 +95,7 @@ const Home = ({ navigation }) => {
                   moment(appointment.endTime, 'hh:mm:ss').format('LT')}
               </StyledText>
               <StyledText fontSize15 marginBottom17>
-                Blood Centre:
+                Blood Centre:{' '}
                 {appointment
                   ? appointment.bloodCentre.bloodCentreName +
                     ' ' +

@@ -184,7 +184,7 @@ async function initBackgroundFetch(taskName) {
       });
     }
     const options = {
-      minimumInterval: 15, // task will fire 15 minute after app is backgrounded
+      minimumInterval: 60 * 15, // 15 minutes
     };
 
     //Registers background fetch task with given name.
@@ -206,6 +206,7 @@ let updateLocation = async (location) => {
         contactNo: userProfile.contactNo,
         fName: userProfile.fName,
         lName: userProfile.lName,
+        icNo: userProfile.appUser.username,
         latitude: location.latitude,
         longitude: location.longitude,
         timestamp: Timestamp.fromDate(new Date()),

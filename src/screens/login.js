@@ -42,11 +42,11 @@ const userCredential = { icNo: '', password: '' };
 
 const validationSchema = Yup.object({
   icNo: Yup.string()
-    .required()
+    .required('Required!')
     .matches(/^[0-9]+$/, 'Must be only digits')
     .min(12, 'Must be exactly 12 digits')
     .max(12, 'Must be exactly 12 digits'),
-  password: Yup.string().trim().required('Password is required!'),
+  password: Yup.string().trim().required('Required!'),
 });
 
 const Login = ({ navigation }) => {
